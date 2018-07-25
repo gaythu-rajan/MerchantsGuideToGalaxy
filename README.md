@@ -24,7 +24,7 @@ If the app cannot comprehend the inputs, it responds with the default answer "I 
 
 From command line
 
-*gradle run -PpathToNotes=/Users/gthiyaga/Desktop/notes.txt*
+*gradle run -PpathToNotes=/Users/xxxx/Desktop/notes.txt*
 
 pathToNotes is the absolute path containing the file with input data
 
