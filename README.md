@@ -2,8 +2,8 @@ Merchant's Guide To Galaxy
 
 # Assumptions
 
-InterGalactic App is Case insensitive glob=GLOB
-Only roman letters will be recognised as valid earthly currency
+..* InterGalactic App is Case insensitive glob=GLOB
+..* Only roman letters will be recognised as valid earthly currency
 
 # Design
 
