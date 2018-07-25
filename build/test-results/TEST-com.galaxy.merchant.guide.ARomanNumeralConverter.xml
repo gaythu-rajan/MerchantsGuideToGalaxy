@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.galaxy.merchant.guide.ARomanNumeralConverter" tests="31" skipped="0" failures="0" errors="0" timestamp="2018-07-24T15:52:37" hostname="Gayathris-MBP" time="0.079">
+  <properties/>
+  <testcase name="doesNotFailForValidOccurencesOfC" classname="com.galaxy.merchant.guide.ARomanNumeralConverter" time="0.053"/>
+  <testcase name="doesNotFailForValidOccurencesOfD" classname="com.galaxy.merchant.guide.ARomanNumeralConverter" time="0.001"/>
+  <testcase name="doesNotFailForValidOccurencesOfI" classname="com.galaxy.merchant.guide.ARomanNumeralConverter" time="0.001"/>
+  <testcase name="doesNotFailForValidOccurencesOfL" classname="com.galaxy.merchant.guide.ARomanNumeralConverter" time="0.001"/>
+  <testcase name="doesNotFailForValidOccurencesOfM" classname="com.galaxy.merchant.guide.ARomanNumeralConverter" time="0.0"/>
+  <testcase name="doesNotFailForValidOccurencesOfV" classname="com.galaxy.merchant.guide.ARomanNumeralConverter" time="0.001"/>
+  <testcase name="doesNotFailForValidOccurencesOfX" classname="com.galaxy.merchant.guide.ARomanNumeralConverter" time="0.001"/>
+  <testcase name="failsWhenDIsSubtractedFromAnything" classname="com.galaxy.merchant.guide.ARomanNumeralConverter" time="0.001"/>
+  <testcase name="failsIfIXCMAreRepeatedMoreThanFourTimesInASegment" classname="com.galaxy.merchant.guide.ARomanNumeralConverter" time="0.0"/>
+  <testcase name="failsWhenIIsSubtractedFromAnythingOtherThanVOrX" classname="com.galaxy.merchant.guide.ARomanNumeralConverter" time="0.001"/>
+  <testcase name="failsWhenLIsSubtractedFromAnything" classname="com.galaxy.merchant.guide.ARomanNumeralConverter" time="0.002"/>
+  <testcase name="failsForMoreThan3ConsecutiveCs" classname="com.galaxy.merchant.guide.ARomanNumeralConverter" time="0.0"/>
+  <testcase name="failsForMoreThan3ConsecutiveIs" classname="com.galaxy.merchant.guide.ARomanNumeralConverter" time="0.0"/>
+  <testcase name="failsForMoreThan3ConsecutiveMs" classname="com.galaxy.merchant.guide.ARomanNumeralConverter" time="0.0"/>
+  <testcase name="failsForMoreThan3ConsecutiveXs" classname="com.galaxy.merchant.guide.ARomanNumeralConverter" time="0.0"/>
+  <testcase name="doesNotFailForFourOccurancesOfCWithASmallNumberInBetween" classname="com.galaxy.merchant.guide.ARomanNumeralConverter" time="0.001"/>
+  <testcase name="failsWhenVIsSubtractedFromAnything" classname="com.galaxy.merchant.guide.ARomanNumeralConverter" time="0.001"/>
+  <testcase name="failsForSomeInvalidCombinations" classname="com.galaxy.merchant.guide.ARomanNumeralConverter" time="0.001"/>
+  <testcase name="doesNotFailForFourOccurancesOfMWithASmallNumberInBetween" classname="com.galaxy.merchant.guide.ARomanNumeralConverter" time="0.001"/>
+  <testcase name="failsIfDIsRepeatedAnywhere" classname="com.galaxy.merchant.guide.ARomanNumeralConverter" time="0.0"/>
+  <testcase name="doesNotFailForFourOccurancesOfXWithASmallNumberInBetween" classname="com.galaxy.merchant.guide.ARomanNumeralConverter" time="0.0"/>
+  <testcase name="convertsRomanNumeralIntoNumericValue" classname="com.galaxy.merchant.guide.ARomanNumeralConverter" time="0.002"/>
+  <testcase name="failsToConvertWhenRomanSegmentIsNull" classname="com.galaxy.merchant.guide.ARomanNumeralConverter" time="0.0"/>
+  <testcase name="failsToConvertWhenRomanSegmentHasNonRomanCharacters" classname="com.galaxy.merchant.guide.ARomanNumeralConverter" time="0.0"/>
+  <testcase name="convertsRomanNumeralIntoNumericValueUsingSubtractionNotation" classname="com.galaxy.merchant.guide.ARomanNumeralConverter" time="0.001"/>
+  <testcase name="doesNotFailForValidSubtractionOccurenceOfI" classname="com.galaxy.merchant.guide.ARomanNumeralConverter" time="0.001"/>
+  <testcase name="doesNotFailForValidSubtractionOccurenceOfX" classname="com.galaxy.merchant.guide.ARomanNumeralConverter" time="0.001"/>
+  <testcase name="failsWhenXIsSubtractedFromAnythingOtherThanLOrC" classname="com.galaxy.merchant.guide.ARomanNumeralConverter" time="0.0"/>
+  <testcase name="failsIfLIsRepeatedAnywhere" classname="com.galaxy.merchant.guide.ARomanNumeralConverter" time="0.001"/>
+  <testcase name="failsIfIXCMAreRepeatedMoreThanThreeTimesInARow" classname="com.galaxy.merchant.guide.ARomanNumeralConverter" time="0.0"/>
+  <testcase name="failsIfVIsRepeatedAnywhere" classname="com.galaxy.merchant.guide.ARomanNumeralConverter" time="0.001"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

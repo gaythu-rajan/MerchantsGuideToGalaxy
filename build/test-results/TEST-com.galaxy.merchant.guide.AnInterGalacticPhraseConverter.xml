@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.galaxy.merchant.guide.AnInterGalacticPhraseConverter" tests="5" skipped="0" failures="0" errors="0" timestamp="2018-07-24T15:52:37" hostname="Gayathris-MBP" time="0.002">
+  <properties/>
+  <testcase name="failWhenInputPhraseIsNull" classname="com.galaxy.merchant.guide.AnInterGalacticPhraseConverter" time="0.0"/>
+  <testcase name="failWhenInputPhraseIsInvalidFormat" classname="com.galaxy.merchant.guide.AnInterGalacticPhraseConverter" time="0.001"/>
+  <testcase name="convertsInputDatasetIntoCorrespondingRomanNumericPhrase" classname="com.galaxy.merchant.guide.AnInterGalacticPhraseConverter" time="0.001"/>
+  <testcase name="convertsInterGalacticPhraseIntoRomanNumericPhrase" classname="com.galaxy.merchant.guide.AnInterGalacticPhraseConverter" time="0.0"/>
+  <testcase name="initialisesSuccessfully" classname="com.galaxy.merchant.guide.AnInterGalacticPhraseConverter" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

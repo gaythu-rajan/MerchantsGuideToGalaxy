@@ -1,0 +1,28 @@
+apply plugin: 'java'
+apply plugin: 'application'
+
+repositories {
+    jcenter()
+}
+
+dependencies {
+    compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.2'
+    testCompile 'junit:junit:4.12'
+}
+
+mainClassName = 'com.galaxy.merchant.guide.InterGalacticApp'
+
+def projectName = 'Merchants Guide To Galaxy'
+def projectVersion = '1.0.0'
+
+run {
+    args = [ "${pathToNotes}" ]
+}
+
+jar {
+    manifest {
+        attributes("Implementation-Title": projectName,
+                "Implementation-Version": projectVersion,
+                "Main-Class": mainClassName)
+    }
+}
