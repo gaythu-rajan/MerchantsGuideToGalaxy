@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 import com.galaxy.merchant.guide.exceptions.InvalidInputFormatException;
 
 /**
- * Converter to convert InterGalactic Phrase into Earthly numeric phrase and numeric value of an earthly phrase
+ * Converter to convert InterGalactic Phrase into Roman numeric phrase
  *
  * @author Gayathri Thiyagarajan
  */
@@ -33,7 +33,7 @@ class InterGalacticPhraseConverter {
      * @return Equivalent roman segment parsed using Intergalactic units "II"
      * @throws InvalidInputFormatException if the Intergalactic Phrase does not contain a valid inter galactic units from interGalacticConversionUnits
      */
-    String convertIntergalacticPhraseIntoRomanSegment(String interGalacticPhrase) throws InvalidInputFormatException {
+    String convertInterGalacticPhraseIntoRomanSegment(String interGalacticPhrase) throws InvalidInputFormatException {
 
         checkInterGalacticPhraseContainsValidInterGalacticUnits(interGalacticPhrase);
 

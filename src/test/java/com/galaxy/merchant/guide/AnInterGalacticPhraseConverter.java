@@ -66,7 +66,7 @@ public class AnInterGalacticPhraseConverter {
         //when
         String romanNumericSegment = null;
         try {
-            romanNumericSegment = interGalacticPhraseConverter.convertIntergalacticPhraseIntoRomanSegment(interGalacticPhrase);
+            romanNumericSegment = interGalacticPhraseConverter.convertInterGalacticPhraseIntoRomanSegment(interGalacticPhrase);
         } catch (InvalidInputFormatException e) {
             fail("Should not have thrown any exception");
         }
@@ -92,7 +92,7 @@ public class AnInterGalacticPhraseConverter {
             //then
             try {
                 assertEquals(interGalacticPhraseMap.get(galacticPhrase),
-                        interGalacticPhraseConverter.convertIntergalacticPhraseIntoRomanSegment(galacticPhrase));
+                        interGalacticPhraseConverter.convertInterGalacticPhraseIntoRomanSegment(galacticPhrase));
             } catch (InvalidInputFormatException e) {
                 fail("Should not have thrown any exception");
             }
@@ -106,7 +106,7 @@ public class AnInterGalacticPhraseConverter {
 
         //when
         try {
-            interGalacticPhraseConverter.convertIntergalacticPhraseIntoRomanSegment(interGalacticPhrase);
+            interGalacticPhraseConverter.convertInterGalacticPhraseIntoRomanSegment(interGalacticPhrase);
             fail("Should have thrown exception");
         } catch (InvalidInputFormatException e) {
             //then
@@ -126,7 +126,7 @@ public class AnInterGalacticPhraseConverter {
 
         //when
         try {
-            interGalacticPhraseConverter.convertIntergalacticPhraseIntoRomanSegment(interGalacticPhrase);
+            interGalacticPhraseConverter.convertInterGalacticPhraseIntoRomanSegment(interGalacticPhrase);
             fail("Should have thrown exception");
         } catch (InvalidInputFormatException e) {
             //then
@@ -140,7 +140,7 @@ public class AnInterGalacticPhraseConverter {
 
         //when
         try {
-            interGalacticPhraseConverter.convertIntergalacticPhraseIntoRomanSegment(interGalacticPhrase);
+            interGalacticPhraseConverter.convertInterGalacticPhraseIntoRomanSegment(interGalacticPhrase);
             fail("Should have thrown exception");
         } catch (InvalidInputFormatException e) {
             //then
@@ -154,7 +154,7 @@ public class AnInterGalacticPhraseConverter {
 
         //when
         try {
-            interGalacticPhraseConverter.convertIntergalacticPhraseIntoRomanSegment(interGalacticPhrase);
+            interGalacticPhraseConverter.convertInterGalacticPhraseIntoRomanSegment(interGalacticPhrase);
             fail("Should have thrown exception");
         } catch (InvalidInputFormatException e) {
             //then

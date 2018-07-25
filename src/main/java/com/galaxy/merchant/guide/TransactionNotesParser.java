@@ -1,5 +1,7 @@
 package com.galaxy.merchant.guide;
 
+import static com.galaxy.merchant.guide.constants.InterGalacticAppConstants.PATTERN_OF_EARTH_MATERIALS;
+import static java.util.regex.Pattern.compile;
 import static org.apache.commons.lang3.StringUtils.EMPTY;
 import static org.apache.commons.lang3.StringUtils.substringBefore;
 import static org.apache.commons.lang3.StringUtils.trim;
@@ -14,41 +16,39 @@ import java.util.stream.Collectors;
 import com.galaxy.merchant.guide.exceptions.InvalidInputFormatException;
 
 /**
- * CreditsForEarthMaterialNotesParser class to parse lines from notes to extract transaction
+ * TransactionNotesParser class to parse lines from notes to extract transaction
  * information in order to calculate the number of credits that each EarthMaterial is worth
  * @author Gayathri Thiyagarajan
  */
-class EarthMaterialTransactionParser extends NotesParser {
+class TransactionNotesParser implements NotesParser {
 
-    public static String PATTERN_OF_EARTH_MATERIALS = "(Silver|Gold|Iron){1}";       //todo - chain these from constants
-    public static String PATTERN_OF_TRANSACTION_PART ;
-    private static String EARTH_MATERIAL_TRANSACTION_FORMAT;
-    private static String SPLIT_TRANSACTION_BY_STRING = "(\\sis\\s){1}";
-    private static String STRIP_OUT_STRING = "Credits";
+    private String EARTH_MATERIAL_TRANSACTION_FORMAT;
 
     private final HashMap<String, String> interGalacticConversionUnits;
 
-    public EarthMaterialTransactionParser(HashMap<String, String> interGalacticConversionUnits) {
+    public TransactionNotesParser(HashMap<String, String> interGalacticConversionUnits) {
         this.interGalacticConversionUnits = interGalacticConversionUnits;
         Set<String> interGalacticUnits = interGalacticConversionUnits.keySet();
-        PATTERN_OF_TRANSACTION_PART = interGalacticUnits.stream().map(e -> e).collect(Collectors.joining("|"));
-        EARTH_MATERIAL_TRANSACTION_FORMAT = "^((" + PATTERN_OF_TRANSACTION_PART + ")\\s)+" + PATTERN_OF_EARTH_MATERIALS + "(\\sis\\s){1}\\d+(\\sCredits){1}";
+        String PATTERN_OF_TRANSACTION_PART = interGalacticUnits.stream().map(e -> e).collect(Collectors.joining("|"));
+        this.EARTH_MATERIAL_TRANSACTION_FORMAT = "^((" + PATTERN_OF_TRANSACTION_PART + ")\\s)+"
+                                                        + PATTERN_OF_EARTH_MATERIALS
+                                                        + "(\\sis\\s){1}\\d+(\\scredits){1}";
     }
 
     /**
      * Parses transaction notes like "glob glob Silver is 34 Credits"
      * @param earthMaterialTransactions Array of transactions
-     * @return a map of transactions vs credits  e.g "glob glob Silver-34"
+     * @return a map of earth material vs no. of credits per unit  e.g "Silver-17f"
      */
-    HashMap<String, Double> parseNotes(List<String> earthMaterialTransactions) throws InvalidInputFormatException {
+    public HashMap<String, Double> parseNotes(List<String> earthMaterialTransactions) throws InvalidInputFormatException {
 
         HashMap<String, Double> creditsForEarthMaterialTransactions = new HashMap<>();
 
-        Pattern compiledTransactionPattern = Pattern.compile(EARTH_MATERIAL_TRANSACTION_FORMAT);
-        Pattern compiledEarthMaterialpattern = Pattern.compile(PATTERN_OF_EARTH_MATERIALS);
+        Pattern compiledTransactionPattern = compile(EARTH_MATERIAL_TRANSACTION_FORMAT, Pattern.CASE_INSENSITIVE);
+        Pattern compiledEarthMaterialPattern = compile(PATTERN_OF_EARTH_MATERIALS, Pattern.CASE_INSENSITIVE);
 
         InterGalacticPhraseConverter interGalacticPhraseConverter = new InterGalacticPhraseConverter(interGalacticConversionUnits);
-        RomanNumeralConverter romanNumeralConverter = new RomanNumeralConverter();
+        RomanNumericConverter romanNumericConverter = new RomanNumericConverter();
         Matcher matcher;
 
         for (String aLineOfTransaction : earthMaterialTransactions) {
@@ -57,22 +57,24 @@ class EarthMaterialTransactionParser extends NotesParser {
             if (aLineOfTransaction == null || !compiledTransactionPattern.matcher(aLineOfTransaction).matches())
                 continue;
 
+            String SPLIT_TRANSACTION_BY_STRING = "(\\sis\\s)";
             String[] aLineOfTransactionAsArray = aLineOfTransaction.split(SPLIT_TRANSACTION_BY_STRING);
 
             String remainderOfTheString = aLineOfTransactionAsArray[1];
+            String STRIP_OUT_STRING = "credits";
             String creditsAsString = trim(remainderOfTheString.replace(STRIP_OUT_STRING, EMPTY));
             Integer totalCreditsInTheTransaction = Integer.valueOf(creditsAsString);
 
             String transaction = aLineOfTransactionAsArray[0];
 
-            matcher = compiledEarthMaterialpattern.matcher(transaction);
+            matcher = compiledEarthMaterialPattern.matcher(transaction);
 
             if(matcher.find()) {
-                //keyForMap = glob glob*Silver
                 String interGalacticValue = trim(substringBefore(transaction, matcher.group(1)));
                 String earthMaterial = matcher.group(1);
 
-                Integer quantityOfMaterial = romanNumeralConverter.convertRomanSegmentIntoNumericValue(interGalacticPhraseConverter.convertIntergalacticPhraseIntoRomanSegment(interGalacticValue));
+                Integer quantityOfMaterial = romanNumericConverter.convertRomanSegmentIntoNumericValue(
+                                                interGalacticPhraseConverter.convertInterGalacticPhraseIntoRomanSegment(interGalacticValue));
                 double numberOfCreditsPerUnitOfMaterial = (double) totalCreditsInTheTransaction / quantityOfMaterial;
                 creditsForEarthMaterialTransactions.put(earthMaterial, numberOfCreditsPerUnitOfMaterial);
             }

@@ -1,5 +1,6 @@
 package com.galaxy.merchant.guide;
 
+import static com.galaxy.merchant.guide.constants.InterGalacticAppConstants.PATTERN_OF_EARTH_MATERIALS;
 import static org.apache.commons.lang3.StringUtils.replacePattern;
 import static org.apache.commons.lang3.StringUtils.substringBetween;
 import static org.apache.commons.lang3.StringUtils.trim;
@@ -20,8 +21,7 @@ import org.apache.commons.lang3.StringUtils;
  */
 public class QueryResponder {
 
-    public static String PATTERN_OF_EARTH_MATERIALS = "(Silver|Gold|Iron){1}";
-    public static String PATTERN_OF_TRANSACTION_PART ;
+    private String PATTERN_OF_TRANSACTION_PART ;
 
     //Map of earth material transactions e.g. Silver-17f
     private HashMap<String, Double> creditsForEarthMaterials = new HashMap<>();
@@ -29,7 +29,7 @@ public class QueryResponder {
     //Map of interGalacticConversionUnits and their equivalent numeral e.g. glob-I
     private HashMap<String, String> interGalacticConversionUnits = new HashMap<>();
 
-    private RomanNumeralConverter romanNumeralConverter;
+    private RomanNumericConverter romanNumericConverter;
     private InterGalacticPhraseConverter interGalacticPhraseConverter;
 
     private static final String QUESTION_MARK = "?";
@@ -39,7 +39,7 @@ public class QueryResponder {
         this.interGalacticConversionUnits = interGalacticConversionUnits;
 
         interGalacticPhraseConverter = new InterGalacticPhraseConverter(interGalacticConversionUnits);
-        romanNumeralConverter = new RomanNumeralConverter();
+        romanNumericConverter = new RomanNumericConverter();
 
         Set<String> interGalacticUnits = interGalacticConversionUnits.keySet();
         PATTERN_OF_TRANSACTION_PART = interGalacticUnits.stream().map(e -> e).collect(Collectors.joining("|"));
@@ -51,17 +51,17 @@ public class QueryResponder {
      *
      * @param query E.g. how much is pish tegj glob glob ?
      * @return galacticAmount as numeral in answer format "pish tegj glob glob is 42"
-     * @throws InvalidQueryException
+     * @throws InvalidQueryException If Query is unrecognised
      */
-    public String answerQueryOnIntergalacticAmount(String query) throws InvalidQueryException {
+    String answerQueryOnIntergalacticAmount(String query) throws InvalidQueryException {
 
         String HOW_MUCH_QUERY_MASK = "how much is";
         String galacticAmount = trim(substringBetween(query, HOW_MUCH_QUERY_MASK, QUESTION_MARK));
-        Integer answer = 0;
+        Integer answer;
 
         try {
-            String romanEquivalentOfGalacticAmount = interGalacticPhraseConverter.convertIntergalacticPhraseIntoRomanSegment(galacticAmount);
-            answer = romanNumeralConverter.convertRomanSegmentIntoNumericValue(romanEquivalentOfGalacticAmount);
+            String romanEquivalentOfGalacticAmount = interGalacticPhraseConverter.convertInterGalacticPhraseIntoRomanSegment(galacticAmount);
+            answer = romanNumericConverter.convertRomanSegmentIntoNumericValue(romanEquivalentOfGalacticAmount);
         } catch (InvalidInputFormatException e) {
             throw new InvalidQueryException(InterGalacticAppConstants.DEFAULT_ANSWER);
         }
@@ -81,11 +81,11 @@ public class QueryResponder {
      *
      * @param query E.g. how many Credits is glob prok Silver ?
      * @return numberOfCredits for the transaction in answer format  "glob prok Silver is 68 Credits"
-     * @throws InvalidQueryException
+     * @throws InvalidQueryException If Query is unrecognised
      */
-    public String answerQueryOnCreditsOfATransaction(String query) throws InvalidQueryException {
+    String answerQueryOnCreditsOfATransaction(String query) throws InvalidQueryException {
 
-        String HOW_MANY_CREDITS_QUERY_MASK = "how many Credits is";
+        String HOW_MANY_CREDITS_QUERY_MASK = "how many credits is";
 
         String transactionInTheQuery = trim(substringBetween(query, HOW_MANY_CREDITS_QUERY_MASK, QUESTION_MARK));
 
@@ -98,8 +98,8 @@ public class QueryResponder {
                 String transactionPart = trim(replacePattern(transactionInTheQuery, PATTERN_OF_EARTH_MATERIALS, StringUtils.EMPTY));
                 String earthMaterial = trim(replacePattern(transactionInTheQuery, PATTERN_OF_TRANSACTION_PART, StringUtils.EMPTY));
 
-                String romanEquivalentOfTheTransaction = interGalacticPhraseConverter.convertIntergalacticPhraseIntoRomanSegment(transactionPart);
-                Integer quantityOfEarthMaterial = romanNumeralConverter.convertRomanSegmentIntoNumericValue(romanEquivalentOfTheTransaction);
+                String romanEquivalentOfTheTransaction = interGalacticPhraseConverter.convertInterGalacticPhraseIntoRomanSegment(transactionPart);
+                Integer quantityOfEarthMaterial = romanNumericConverter.convertRomanSegmentIntoNumericValue(romanEquivalentOfTheTransaction);
 
                 if (creditsForEarthMaterials.containsKey(earthMaterial)) {
                     numberOfCredits = (int) Math.round(creditsForEarthMaterials.get(earthMaterial) * quantityOfEarthMaterial);
@@ -113,7 +113,7 @@ public class QueryResponder {
             throw new InvalidQueryException(InterGalacticAppConstants.DEFAULT_ANSWER);
         }
 
-        return transactionInTheQuery + " is " + numberOfCredits + " Credits";
+        return transactionInTheQuery + " is " + numberOfCredits + " credits";
     }
 
     static class QueryResponderBuilder {

@@ -1,14 +1,14 @@
 package com.galaxy.merchant.guide;
 
-import static com.galaxy.merchant.guide.RomanChars.C;
-import static com.galaxy.merchant.guide.RomanChars.D;
-import static com.galaxy.merchant.guide.RomanChars.I;
-import static com.galaxy.merchant.guide.RomanChars.L;
-import static com.galaxy.merchant.guide.RomanChars.M;
-import static com.galaxy.merchant.guide.RomanChars.V;
-import static com.galaxy.merchant.guide.RomanChars.X;
-import static com.galaxy.merchant.guide.RomanChars.Z;
-import static com.galaxy.merchant.guide.RomanChars.valueOf;
+import static com.galaxy.merchant.guide.RomanNumerals.C;
+import static com.galaxy.merchant.guide.RomanNumerals.D;
+import static com.galaxy.merchant.guide.RomanNumerals.I;
+import static com.galaxy.merchant.guide.RomanNumerals.L;
+import static com.galaxy.merchant.guide.RomanNumerals.M;
+import static com.galaxy.merchant.guide.RomanNumerals.V;
+import static com.galaxy.merchant.guide.RomanNumerals.X;
+import static com.galaxy.merchant.guide.RomanNumerals.Z;
+import static com.galaxy.merchant.guide.RomanNumerals.valueOf;
 import static org.apache.commons.lang3.StringUtils.countMatches;
 import static org.apache.commons.lang3.StringUtils.isNoneBlank;
 
@@ -19,11 +19,11 @@ import com.galaxy.merchant.guide.exceptions.InvalidInputFormatException;
 import org.apache.commons.lang3.ArrayUtils;
 
 /**
- * Converter to convert an earthly phrase into numerical value.
+ * Converter to convert an roman segment into numeric value.
  *
  * @author Gayathri Thiyagarajan
  */
-public class RomanNumeralConverter {
+public class RomanNumericConverter {
 
     private static String MORE_THAN_3_IN_A_ROW_I = "(I{4,}+)";
     private static String MORE_THAN_3_IN_A_ROW_X = "(X{4,}+)";
@@ -36,7 +36,7 @@ public class RomanNumeralConverter {
     private static String L_CANNOT_BE_SUBTRACTED_FROM_ANYTHING = "L[CDM]";
     private static String D_CANNOT_BE_SUBTRACTED_FROM_ANYTHING = "D[M]";
 
-    private static String AN_ODD_BALL = "^(?!III)I[IVX][IVXLCDM]";
+    private static String AN_ODD_BALL = "(^(?!III)I[IVX][IVXLCDM])|(^VI*X[IVXLCDM]*)";
 
     /**
      * Converts a roman segment into its numeric value.
@@ -57,6 +57,7 @@ public class RomanNumeralConverter {
 
     }
 
+    //Catch all other combinations that can't be caught by the rules
     private void verifyTheSegmentIsNotAnOddBall(String romanSegment) throws InvalidInputFormatException {
         //Odd ball pattern
         if(Pattern.compile(AN_ODD_BALL).matcher(romanSegment).find())
@@ -65,7 +66,7 @@ public class RomanNumeralConverter {
 
     /**
      * Checks that the roman segment is not null, blank or empty
-     * @param romanSegment
+     * @param romanSegment Roman numeral segment
      * @throws InvalidInputFormatException  if the roman segment is null, blank or empty
      */
     private void checkForValidRomanSegment(String romanSegment) throws InvalidInputFormatException {
@@ -88,7 +89,7 @@ public class RomanNumeralConverter {
      *      <li>The symbols"I", "X", "C", and "M" can be repeated three times in succession, but no more</li>
      *      <li>They may appear four times if the third and fourth are separated by a smaller value</li>
      *  </ul>
-     * @param romanSegment
+     * @param romanSegment Roman numeral Segment
      * @throws InvalidInputFormatException if the roman numeral violates any of the rules of repetition
      */
     private void verifyRepetitionRulesOnTheSegment(String romanSegment) throws InvalidInputFormatException {
@@ -141,16 +142,16 @@ public class RomanNumeralConverter {
     /**
      * Computes the numeric value from the roman letters and its numerical equivalent by applying the addition/subtraction rules.
      *
-     * @param romanLettersFromTheSegment
-     * @return numericEquivalent of the Roman Letter segment
+     * @param romanLettersFromTheSegment Roman segment split into roman characters
+     * @return numericEquivalent of the Roman numeral segment
      */
     private Integer computeNumericValueOfARomanSegment(Character[] romanLettersFromTheSegment) {
         //Init the sum to zero as there is no zero in roman numeral
         Integer numericValue = 0;
-        RomanChars letterAtCurrentPos;
-        RomanChars letterAtNextPos = Z;
+        RomanNumerals letterAtCurrentPos;
+        RomanNumerals letterAtNextPos = Z;
 
-        Integer valueToAdd = 0;
+        Integer valueToAdd;
 
         int j;
 

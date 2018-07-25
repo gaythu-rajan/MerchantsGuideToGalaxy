@@ -34,9 +34,9 @@ public class AQueryResponder {
         interGalacticUnitsFromInput.put("pish", "X");
         interGalacticUnitsFromInput.put("tegj", "L");
 
-        earthMaterialTransactionsFromInput.put("Silver", 17d);
-        earthMaterialTransactionsFromInput.put("Gold", 14450d);
-        earthMaterialTransactionsFromInput.put("Iron", 195.5d);
+        earthMaterialTransactionsFromInput.put("silver", 17d);
+        earthMaterialTransactionsFromInput.put("gold", 14450d);
+        earthMaterialTransactionsFromInput.put("iron", 195.5d);
 
     }
 
@@ -159,26 +159,27 @@ public class AQueryResponder {
     @Test
     public void answersHowManyCreditsForATransaction() {
         //Given
-        String query = "how many Credits is glob prok Silver ?";
+        String query = "how many credits is glob prok silver ?";
 
         //verify
-        String expectedAnswer = "glob prok Silver is 68 Credits";
+        String expectedAnswer = "glob prok silver is 68 credits";
 
         //when
         String answer = null;
         try {
             answer = queryResponder.answerQueryOnCreditsOfATransaction(query);
         } catch (InvalidQueryException e) {
+            e.printStackTrace();
             fail("Should not have thrown exception");
         }
 
         //then
         assertEquals(expectedAnswer, answer);
 
-        query = "how many Credits is glob prok Gold ?";
+        query = "how many credits is glob prok gold ?";
 
         //verify
-        expectedAnswer = "glob prok Gold is 57800 Credits";
+        expectedAnswer = "glob prok gold is 57800 credits";
 
         //when
         try {
@@ -190,10 +191,10 @@ public class AQueryResponder {
         //then
         assertEquals(expectedAnswer, answer);
 
-        query = "how many Credits is glob prok Iron ?";
+        query = "how many credits is glob prok iron ?";
 
         //verify
-        expectedAnswer = "glob prok Iron is 782 Credits";
+        expectedAnswer = "glob prok iron is 782 credits";
 
         //when
         try {
@@ -209,7 +210,7 @@ public class AQueryResponder {
     @Test
     public void cannotAnswerAQueryWithUnknownEarthMaterial() {
         //Given
-        String query = "how many Credits is glob prok Fish ?";
+        String query = "how many credits is glob prok fish ?";
 
         //when
         try {
@@ -223,7 +224,7 @@ public class AQueryResponder {
     @Test
     public void cannotAnswerAQueryWithUnknownGalacticUnit() {
         //Given
-        String query = "how many Credits is boog prok Iron ?";
+        String query = "how many credits is boog prok iron ?";
 
         //when
         try {

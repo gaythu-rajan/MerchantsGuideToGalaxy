@@ -10,7 +10,7 @@ import com.galaxy.merchant.guide.exceptions.InvalidInputFormatException;
  *
  * @author Gayathri Thiyagarajan
  */
-abstract class NotesParser {
+interface NotesParser {
 
-    abstract HashMap<String, ?> parseNotes(List<String> linesFromNotes) throws InvalidInputFormatException;
+    HashMap<String, ?> parseNotes(List<String> linesFromNotes) throws InvalidInputFormatException;
 }

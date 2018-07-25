@@ -15,14 +15,13 @@ import org.junit.Test;
  *
  * @author Gayathri Thiyagarajan
  */
-public class AnEarthMaterialTransactionParser {
+public class AnTransactionNotesParser {
 
-    private EarthMaterialTransactionParser earthMaterialTransactionParser;
+    private TransactionNotesParser transactionNotesParser;
 
-    private String[] earthMaterialTransactions = {"glob glob Silver is 34 Credits"
-                                                , "glob prok Gold is 57800 Credits"
-                                                ,"pish pish Iron is 3910 Credits"};
-                       //todo handle exceptions and exception tests better
+    private String[] earthMaterialTransactions = {"glob glob silver is 34 credits"
+                                                , "glob prok gold is 57800 credits"
+                                                ,"pish pish iron is 3910 credits"};
     @Before
     public void initialiseEarthMaterialTransactionParser() {
         HashMap<String, String> interGalacticUnitsFromInput = new HashMap<>();
@@ -30,7 +29,7 @@ public class AnEarthMaterialTransactionParser {
         interGalacticUnitsFromInput.put("prok", "V");
         interGalacticUnitsFromInput.put("pish", "X");
         interGalacticUnitsFromInput.put("tegj", "L");
-        earthMaterialTransactionParser = new EarthMaterialTransactionParser(interGalacticUnitsFromInput);
+        transactionNotesParser = new TransactionNotesParser(interGalacticUnitsFromInput);
     }
 
     @Test
@@ -38,7 +37,7 @@ public class AnEarthMaterialTransactionParser {
         //Given
 
         //When
-        HashMap<String, Double> transactionMap = earthMaterialTransactionParser.parseNotes(asList(earthMaterialTransactions));
+        HashMap<String, Double> transactionMap = transactionNotesParser.parseNotes(asList(earthMaterialTransactions));
 
         //Then
         assertNotNull(transactionMap);
@@ -52,7 +51,7 @@ public class AnEarthMaterialTransactionParser {
                 , "Hello world"};
 
         //When
-        HashMap<String, Double> transactionMap = earthMaterialTransactionParser.parseNotes(asList(earthMaterialTransactions));
+        HashMap<String, Double> transactionMap = transactionNotesParser.parseNotes(asList(earthMaterialTransactions));
 
         //Then
         assertNotNull(transactionMap);
@@ -64,13 +63,12 @@ public class AnEarthMaterialTransactionParser {
         //Given
 
         //When
-        HashMap<String, Double> transactionMap = earthMaterialTransactionParser.parseNotes(asList(earthMaterialTransactions));
+        HashMap<String, Double> transactionMap = transactionNotesParser.parseNotes(asList(earthMaterialTransactions));
 
         //Then
 
-        assertEquals(Double.valueOf(17), transactionMap.get("Silver"));
-        assertEquals(Double.valueOf(14450), transactionMap.get("Gold"));
-        assertEquals(Double.valueOf(195.5), transactionMap.get("Iron"));
+        assertEquals(Double.valueOf(17), transactionMap.get("silver"));
+        assertEquals(Double.valueOf(14450), transactionMap.get("gold"));
+        assertEquals(Double.valueOf(195.5), transactionMap.get("iron"));
     }
-
 }

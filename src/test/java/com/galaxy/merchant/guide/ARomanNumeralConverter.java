@@ -16,7 +16,7 @@ import org.junit.Test;
  */
 public class ARomanNumeralConverter {
 
-    RomanNumeralConverter romanNumeralConverter = new RomanNumeralConverter();
+    RomanNumericConverter romanNumericConverter = new RomanNumericConverter();
     @Test
     public void convertsRomanNumeralIntoNumericValueUsingSubtractionNotation() {
         //Given
@@ -27,7 +27,7 @@ public class ARomanNumeralConverter {
 
         //when
         try {
-            Integer actualNumericValue = romanNumeralConverter.convertRomanSegmentIntoNumericValue(romanSegment);
+            Integer actualNumericValue = romanNumericConverter.convertRomanSegmentIntoNumericValue(romanSegment);
             assertEquals(expectedNumericValue, actualNumericValue);
         } catch (InvalidInputFormatException e) {
             //then
@@ -42,7 +42,7 @@ public class ARomanNumeralConverter {
 
         //when
         try {
-            Integer actualNumericValue = romanNumeralConverter.convertRomanSegmentIntoNumericValue(romanSegment);
+            Integer actualNumericValue = romanNumericConverter.convertRomanSegmentIntoNumericValue(romanSegment);
             assertEquals(expectedNumericValue, actualNumericValue);
         } catch (InvalidInputFormatException e) {
             //then
@@ -57,7 +57,7 @@ public class ARomanNumeralConverter {
 
         //when
         try {
-            Integer actualNumericValue = romanNumeralConverter.convertRomanSegmentIntoNumericValue(romanSegment);
+            Integer actualNumericValue = romanNumericConverter.convertRomanSegmentIntoNumericValue(romanSegment);
             assertEquals(expectedNumericValue, actualNumericValue);
         } catch (InvalidInputFormatException e) {
             //then
@@ -72,7 +72,7 @@ public class ARomanNumeralConverter {
 
         //when
         try {
-            Integer actualNumericValue = romanNumeralConverter.convertRomanSegmentIntoNumericValue(romanSegment);
+            Integer actualNumericValue = romanNumericConverter.convertRomanSegmentIntoNumericValue(romanSegment);
             assertEquals(expectedNumericValue, actualNumericValue);
         } catch (InvalidInputFormatException e) {
             //then
@@ -87,7 +87,7 @@ public class ARomanNumeralConverter {
 
         //when
         try {
-            Integer actualNumericValue = romanNumeralConverter.convertRomanSegmentIntoNumericValue(romanSegment);
+            Integer actualNumericValue = romanNumericConverter.convertRomanSegmentIntoNumericValue(romanSegment);
             assertEquals(expectedNumericValue, actualNumericValue);
         } catch (InvalidInputFormatException e) {
             //then
@@ -102,7 +102,7 @@ public class ARomanNumeralConverter {
 
         //when
         try {
-            Integer actualNumericValue = romanNumeralConverter.convertRomanSegmentIntoNumericValue(romanSegment);
+            Integer actualNumericValue = romanNumericConverter.convertRomanSegmentIntoNumericValue(romanSegment);
             assertEquals(expectedNumericValue, actualNumericValue);
         } catch (InvalidInputFormatException e) {
             //then
@@ -141,7 +141,7 @@ public class ARomanNumeralConverter {
 
         for (String romanSegment : romanToNumericValueMap.keySet()) {
             try {
-                actualNumericValue = romanNumeralConverter.convertRomanSegmentIntoNumericValue(romanSegment);
+                actualNumericValue = romanNumericConverter.convertRomanSegmentIntoNumericValue(romanSegment);
             } catch (InvalidInputFormatException e) {
                 fail("Should not have thrown any exception");
             }
@@ -158,7 +158,7 @@ public class ARomanNumeralConverter {
 
         //when
         try {
-            romanNumeralConverter.convertRomanSegmentIntoNumericValue(romanSegment);
+            assertEquals(1, romanNumericConverter.convertRomanSegmentIntoNumericValue(romanSegment).intValue());
         } catch (InvalidInputFormatException e) {
             //then
             fail("There shouldn't be any exception");
@@ -169,7 +169,7 @@ public class ARomanNumeralConverter {
 
         //when
         try {
-            romanNumeralConverter.convertRomanSegmentIntoNumericValue(romanSegment);
+            assertEquals(2, romanNumericConverter.convertRomanSegmentIntoNumericValue(romanSegment).intValue());
         } catch (InvalidInputFormatException e) {
             //then
             fail("There shouldn't be any exception");
@@ -180,7 +180,7 @@ public class ARomanNumeralConverter {
 
         //when
         try {
-            romanNumeralConverter.convertRomanSegmentIntoNumericValue(romanSegment);
+            assertEquals(3, romanNumericConverter.convertRomanSegmentIntoNumericValue(romanSegment).intValue());
         } catch (InvalidInputFormatException e) {
             //then
             fail("There shouldn't be any exception");
@@ -191,7 +191,7 @@ public class ARomanNumeralConverter {
 
         //when
         try {
-            romanNumeralConverter.convertRomanSegmentIntoNumericValue(romanSegment);
+            assertEquals(4, romanNumericConverter.convertRomanSegmentIntoNumericValue(romanSegment).intValue());
         } catch (InvalidInputFormatException e) {
             //then
             fail("There shouldn't be any exception");
@@ -206,7 +206,7 @@ public class ARomanNumeralConverter {
 
         //when
         try {
-            romanNumeralConverter.convertRomanSegmentIntoNumericValue(romanSegment);
+            romanNumericConverter.convertRomanSegmentIntoNumericValue(romanSegment);
             fail("Should have thrown exception");
         } catch (InvalidInputFormatException e) {
             //then
@@ -227,7 +227,7 @@ public class ARomanNumeralConverter {
 
         //when
         try {
-            romanNumeralConverter.convertRomanSegmentIntoNumericValue(romanSegment);
+            romanNumericConverter.convertRomanSegmentIntoNumericValue(romanSegment);
             fail("Should have thrown exception");
         } catch (InvalidInputFormatException e) {
             //then
@@ -242,7 +242,7 @@ public class ARomanNumeralConverter {
 
         //when
         try {
-            romanNumeralConverter.convertRomanSegmentIntoNumericValue(romanSegment);
+            romanNumericConverter.convertRomanSegmentIntoNumericValue(romanSegment);
             fail("Should have thrown exception");
         } catch (InvalidInputFormatException e) {
             //then
@@ -255,7 +255,7 @@ public class ARomanNumeralConverter {
         romanSegment = "LVV";
         //when
         try {
-            romanNumeralConverter.convertRomanSegmentIntoNumericValue(romanSegment);
+            romanNumericConverter.convertRomanSegmentIntoNumericValue(romanSegment);
             fail("Should have thrown exception");
         } catch (InvalidInputFormatException e) {
             //then
@@ -268,7 +268,7 @@ public class ARomanNumeralConverter {
         romanSegment = "IVV";
         //when
         try {
-            romanNumeralConverter.convertRomanSegmentIntoNumericValue(romanSegment);
+            romanNumericConverter.convertRomanSegmentIntoNumericValue(romanSegment);
             fail("Should have thrown exception");
         } catch (InvalidInputFormatException e) {
             //then
@@ -281,7 +281,7 @@ public class ARomanNumeralConverter {
         romanSegment = "DLVVV";
         //when
         try {
-            romanNumeralConverter.convertRomanSegmentIntoNumericValue(romanSegment);
+            romanNumericConverter.convertRomanSegmentIntoNumericValue(romanSegment);
             fail("Should have thrown exception");
         } catch (InvalidInputFormatException e) {
             //then
@@ -298,7 +298,7 @@ public class ARomanNumeralConverter {
 
         //when
         try {
-            romanNumeralConverter.convertRomanSegmentIntoNumericValue(romanSegment);
+            assertEquals(5, romanNumericConverter.convertRomanSegmentIntoNumericValue(romanSegment).intValue());
         } catch (InvalidInputFormatException e) {
             //then
             fail("There shouldn't be any exception");
@@ -309,7 +309,7 @@ public class ARomanNumeralConverter {
 
         //when
         try {
-            romanNumeralConverter.convertRomanSegmentIntoNumericValue(romanSegment);
+            assertEquals(6, romanNumericConverter.convertRomanSegmentIntoNumericValue(romanSegment).intValue());
         } catch (InvalidInputFormatException e) {
             //then
             fail("There shouldn't be any exception");
@@ -320,7 +320,7 @@ public class ARomanNumeralConverter {
 
         //when
         try {
-            romanNumeralConverter.convertRomanSegmentIntoNumericValue(romanSegment);
+            assertEquals(4, romanNumericConverter.convertRomanSegmentIntoNumericValue(romanSegment).intValue());
         } catch (InvalidInputFormatException e) {
             //then
             fail("There shouldn't be any exception");
@@ -338,7 +338,7 @@ public class ARomanNumeralConverter {
 
         //when
         try {
-            romanNumeralConverter.convertRomanSegmentIntoNumericValue(romanSegment);
+            romanNumericConverter.convertRomanSegmentIntoNumericValue(romanSegment);
             fail("Should have thrown exception");
         } catch (InvalidInputFormatException e) {
             //then
@@ -356,7 +356,7 @@ public class ARomanNumeralConverter {
 
         //when
         try {
-            romanNumeralConverter.convertRomanSegmentIntoNumericValue(romanSegment);
+            assertEquals(10, romanNumericConverter.convertRomanSegmentIntoNumericValue(romanSegment).intValue());
         } catch (InvalidInputFormatException e) {
             //then
             fail("There shouldn't be any exception");
@@ -367,7 +367,7 @@ public class ARomanNumeralConverter {
 
         //when
         try {
-            romanNumeralConverter.convertRomanSegmentIntoNumericValue(romanSegment);
+            assertEquals(20, romanNumericConverter.convertRomanSegmentIntoNumericValue(romanSegment).intValue());
         } catch (InvalidInputFormatException e) {
             //then
             fail("There shouldn't be any exception");
@@ -378,7 +378,7 @@ public class ARomanNumeralConverter {
 
         //when
         try {
-            romanNumeralConverter.convertRomanSegmentIntoNumericValue(romanSegment);
+            assertEquals(30, romanNumericConverter.convertRomanSegmentIntoNumericValue(romanSegment).intValue());
         } catch (InvalidInputFormatException e) {
             //then
             fail("There shouldn't be any exception");
@@ -390,7 +390,7 @@ public class ARomanNumeralConverter {
 
         //when
         try {
-            romanNumeralConverter.convertRomanSegmentIntoNumericValue(romanSegment);
+            assertEquals(9, romanNumericConverter.convertRomanSegmentIntoNumericValue(romanSegment).intValue());
         } catch (InvalidInputFormatException e) {
             //then
             fail("There shouldn't be any exception");
@@ -402,7 +402,7 @@ public class ARomanNumeralConverter {
 
         //when
         try {
-            romanNumeralConverter.convertRomanSegmentIntoNumericValue(romanSegment);
+            assertEquals(11, romanNumericConverter.convertRomanSegmentIntoNumericValue(romanSegment).intValue());
         } catch (InvalidInputFormatException e) {
             //then
             fail("There shouldn't be any exception");
@@ -414,7 +414,7 @@ public class ARomanNumeralConverter {
 
         //when
         try {
-            romanNumeralConverter.convertRomanSegmentIntoNumericValue(romanSegment);
+            assertEquals(19, romanNumericConverter.convertRomanSegmentIntoNumericValue(romanSegment).intValue());
         } catch (InvalidInputFormatException e) {
             //then
             fail("There shouldn't be any exception");
@@ -428,7 +428,7 @@ public class ARomanNumeralConverter {
 
         //when
         try {
-            romanNumeralConverter.convertRomanSegmentIntoNumericValue(romanSegment);
+            assertEquals(39, romanNumericConverter.convertRomanSegmentIntoNumericValue(romanSegment).intValue());
         } catch (InvalidInputFormatException e) {
             //then
             fail("There shouldn't be any exception");
@@ -445,7 +445,7 @@ public class ARomanNumeralConverter {
 
         //when
         try {
-            romanNumeralConverter.convertRomanSegmentIntoNumericValue(romanSegment);
+            romanNumericConverter.convertRomanSegmentIntoNumericValue(romanSegment);
             fail("Should have thrown exception");
         } catch (InvalidInputFormatException e) {
             //then
@@ -458,7 +458,7 @@ public class ARomanNumeralConverter {
         romanSegment = "LXL";
         //when
         try {
-            romanNumeralConverter.convertRomanSegmentIntoNumericValue(romanSegment);
+            romanNumericConverter.convertRomanSegmentIntoNumericValue(romanSegment);
             fail("Should have thrown exception");
         } catch (InvalidInputFormatException e) {
             //then
@@ -471,7 +471,7 @@ public class ARomanNumeralConverter {
         romanSegment = "DLLV";
         //when
         try {
-            romanNumeralConverter.convertRomanSegmentIntoNumericValue(romanSegment);
+            romanNumericConverter.convertRomanSegmentIntoNumericValue(romanSegment);
             fail("Should have thrown exception");
         } catch (InvalidInputFormatException e) {
             //then
@@ -484,7 +484,7 @@ public class ARomanNumeralConverter {
         romanSegment = "DLVLV";
         //when
         try {
-            romanNumeralConverter.convertRomanSegmentIntoNumericValue(romanSegment);
+            romanNumericConverter.convertRomanSegmentIntoNumericValue(romanSegment);
             fail("Should have thrown exception");
         } catch (InvalidInputFormatException e) {
             //then
@@ -497,7 +497,7 @@ public class ARomanNumeralConverter {
         romanSegment = "DCLLXX";
         //when
         try {
-            romanNumeralConverter.convertRomanSegmentIntoNumericValue(romanSegment);
+            romanNumericConverter.convertRomanSegmentIntoNumericValue(romanSegment);
             fail("Should have thrown exception");
         } catch (InvalidInputFormatException e) {
             //then
@@ -514,7 +514,7 @@ public class ARomanNumeralConverter {
 
         //when
         try {
-            romanNumeralConverter.convertRomanSegmentIntoNumericValue(romanSegment);
+            assertEquals(50, romanNumericConverter.convertRomanSegmentIntoNumericValue(romanSegment).intValue());
         } catch (InvalidInputFormatException e) {
             //then
             fail("There shouldn't be any exception");
@@ -525,7 +525,7 @@ public class ARomanNumeralConverter {
 
         //when
         try {
-            romanNumeralConverter.convertRomanSegmentIntoNumericValue(romanSegment);
+            assertEquals(65, romanNumericConverter.convertRomanSegmentIntoNumericValue(romanSegment).intValue());
         } catch (InvalidInputFormatException e) {
             //then
             fail("There shouldn't be any exception");
@@ -536,7 +536,7 @@ public class ARomanNumeralConverter {
 
         //when
         try {
-            romanNumeralConverter.convertRomanSegmentIntoNumericValue(romanSegment);
+            assertEquals(40, romanNumericConverter.convertRomanSegmentIntoNumericValue(romanSegment).intValue());
         } catch (InvalidInputFormatException e) {
             //then
             fail("There shouldn't be any exception");
@@ -554,7 +554,7 @@ public class ARomanNumeralConverter {
 
         //when
         try {
-            romanNumeralConverter.convertRomanSegmentIntoNumericValue(romanSegment);
+            romanNumericConverter.convertRomanSegmentIntoNumericValue(romanSegment);
             fail("Should have thrown exception");
         } catch (InvalidInputFormatException e) {
             //then
@@ -572,7 +572,7 @@ public class ARomanNumeralConverter {
 
         //when
         try {
-            romanNumeralConverter.convertRomanSegmentIntoNumericValue(romanSegment);
+            assertEquals(100, romanNumericConverter.convertRomanSegmentIntoNumericValue(romanSegment).intValue());
         } catch (InvalidInputFormatException e) {
             //then
             fail("There shouldn't be any exception");
@@ -583,7 +583,7 @@ public class ARomanNumeralConverter {
 
         //when
         try {
-            romanNumeralConverter.convertRomanSegmentIntoNumericValue(romanSegment);
+            assertEquals(160, romanNumericConverter.convertRomanSegmentIntoNumericValue(romanSegment).intValue());
         } catch (InvalidInputFormatException e) {
             //then
             fail("There shouldn't be any exception");
@@ -594,7 +594,7 @@ public class ARomanNumeralConverter {
 
         //when
         try {
-            romanNumeralConverter.convertRomanSegmentIntoNumericValue(romanSegment);
+            assertEquals(250, romanNumericConverter.convertRomanSegmentIntoNumericValue(romanSegment).intValue());
         } catch (InvalidInputFormatException e) {
             //then
             fail("There shouldn't be any exception");
@@ -608,7 +608,7 @@ public class ARomanNumeralConverter {
 
         //when
         try {
-            romanNumeralConverter.convertRomanSegmentIntoNumericValue(romanSegment);
+            assertEquals(390, romanNumericConverter.convertRomanSegmentIntoNumericValue(romanSegment).intValue());
         } catch (InvalidInputFormatException e) {
             //then
             fail("There shouldn't be any exception");
@@ -625,7 +625,7 @@ public class ARomanNumeralConverter {
 
         //when
         try {
-            romanNumeralConverter.convertRomanSegmentIntoNumericValue(romanSegment);
+            romanNumericConverter.convertRomanSegmentIntoNumericValue(romanSegment);
             fail("Should have thrown exception");
         } catch (InvalidInputFormatException e) {
             //then
@@ -639,7 +639,7 @@ public class ARomanNumeralConverter {
 
         //when
         try {
-            romanNumeralConverter.convertRomanSegmentIntoNumericValue(romanSegment);
+            romanNumericConverter.convertRomanSegmentIntoNumericValue(romanSegment);
             fail("Should have thrown exception");
         } catch (InvalidInputFormatException e) {
             //then
@@ -653,7 +653,7 @@ public class ARomanNumeralConverter {
 
         //when
         try {
-            romanNumeralConverter.convertRomanSegmentIntoNumericValue(romanSegment);
+            romanNumericConverter.convertRomanSegmentIntoNumericValue(romanSegment);
             fail("Should have thrown exception");
         } catch (InvalidInputFormatException e) {
             //then
@@ -670,7 +670,7 @@ public class ARomanNumeralConverter {
 
         //when
         try {
-            romanNumeralConverter.convertRomanSegmentIntoNumericValue(romanSegment);
+            assertEquals(500, romanNumericConverter.convertRomanSegmentIntoNumericValue(romanSegment).intValue());
         } catch (InvalidInputFormatException e) {
             //then
             fail("There shouldn't be any exception");
@@ -681,7 +681,7 @@ public class ARomanNumeralConverter {
 
         //when
         try {
-            romanNumeralConverter.convertRomanSegmentIntoNumericValue(romanSegment);
+            assertEquals(565, romanNumericConverter.convertRomanSegmentIntoNumericValue(romanSegment).intValue());
         } catch (InvalidInputFormatException e) {
             //then
             fail("There shouldn't be any exception");
@@ -699,7 +699,7 @@ public class ARomanNumeralConverter {
 
         //when
         try {
-            romanNumeralConverter.convertRomanSegmentIntoNumericValue(romanSegment);
+            romanNumericConverter.convertRomanSegmentIntoNumericValue(romanSegment);
             fail("Should have thrown exception");
         } catch (InvalidInputFormatException e) {
             //then
@@ -717,7 +717,7 @@ public class ARomanNumeralConverter {
 
         //when
         try {
-            romanNumeralConverter.convertRomanSegmentIntoNumericValue(romanSegment);
+            assertEquals(1000, romanNumericConverter.convertRomanSegmentIntoNumericValue(romanSegment).intValue());
         } catch (InvalidInputFormatException e) {
             //then
             fail("There shouldn't be any exception");
@@ -728,7 +728,7 @@ public class ARomanNumeralConverter {
 
         //when
         try {
-            romanNumeralConverter.convertRomanSegmentIntoNumericValue(romanSegment);
+            assertEquals(1160, romanNumericConverter.convertRomanSegmentIntoNumericValue(romanSegment).intValue());
         } catch (InvalidInputFormatException e) {
             //then
             fail("There shouldn't be any exception");
@@ -739,7 +739,7 @@ public class ARomanNumeralConverter {
 
         //when
         try {
-            romanNumeralConverter.convertRomanSegmentIntoNumericValue(romanSegment);
+            assertEquals(2050, romanNumericConverter.convertRomanSegmentIntoNumericValue(romanSegment).intValue());
         } catch (InvalidInputFormatException e) {
             //then
             fail("There shouldn't be any exception");
@@ -753,7 +753,7 @@ public class ARomanNumeralConverter {
 
         //when
         try {
-            romanNumeralConverter.convertRomanSegmentIntoNumericValue(romanSegment);
+            assertEquals(3900, romanNumericConverter.convertRomanSegmentIntoNumericValue(romanSegment).intValue());
         } catch (InvalidInputFormatException e) {
             //then
             fail("There shouldn't be any exception");
@@ -767,7 +767,7 @@ public class ARomanNumeralConverter {
 
         //when
         try {
-            romanNumeralConverter.convertRomanSegmentIntoNumericValue(romanSegment);
+            assertEquals(4, romanNumericConverter.convertRomanSegmentIntoNumericValue(romanSegment).intValue());
         } catch (InvalidInputFormatException e) {
             //then
             fail("There shouldn't be any exception");
@@ -778,18 +778,7 @@ public class ARomanNumeralConverter {
 
         //when
         try {
-            romanNumeralConverter.convertRomanSegmentIntoNumericValue(romanSegment);
-        } catch (InvalidInputFormatException e) {
-            //then
-            fail("There shouldn't be any exception");
-        }
-
-        //Given
-        romanSegment = "VIX";       //todo this should have failed!
-
-        //when
-        try {
-            romanNumeralConverter.convertRomanSegmentIntoNumericValue(romanSegment);
+            assertEquals(9, romanNumericConverter.convertRomanSegmentIntoNumericValue(romanSegment).intValue());
         } catch (InvalidInputFormatException e) {
             //then
             fail("There shouldn't be any exception");
@@ -807,7 +796,7 @@ public class ARomanNumeralConverter {
 
         //when
         try {
-            romanNumeralConverter.convertRomanSegmentIntoNumericValue(romanSegment);
+            romanNumericConverter.convertRomanSegmentIntoNumericValue(romanSegment);
             fail("Should have thrown exception");
         } catch (InvalidInputFormatException e) {
             //then
@@ -821,7 +810,7 @@ public class ARomanNumeralConverter {
 
         //when
         try {
-            romanNumeralConverter.convertRomanSegmentIntoNumericValue(romanSegment);
+            romanNumericConverter.convertRomanSegmentIntoNumericValue(romanSegment);
             fail("Should have thrown exception");
         } catch (InvalidInputFormatException e) {
             //then
@@ -835,7 +824,7 @@ public class ARomanNumeralConverter {
 
         //when
         try {
-            romanNumeralConverter.convertRomanSegmentIntoNumericValue(romanSegment);
+            romanNumericConverter.convertRomanSegmentIntoNumericValue(romanSegment);
             fail("Should have thrown exception");
         } catch (InvalidInputFormatException e) {
             //then
@@ -849,7 +838,56 @@ public class ARomanNumeralConverter {
 
         //when
         try {
-            romanNumeralConverter.convertRomanSegmentIntoNumericValue(romanSegment);
+            romanNumericConverter.convertRomanSegmentIntoNumericValue(romanSegment);
+            fail("Should have thrown exception");
+        } catch (InvalidInputFormatException e) {
+            //then
+            assertEquals(expectedErrorMessage, e.getErrorMessage());
+        } catch (Exception e) {
+            fail("Should have thrown InvalidInputFormatException");
+        }
+    }
+
+    @Test
+    public void failsWhenIOccursBetweenVAndX() throws InvalidInputFormatException {
+
+        //Given
+        String romanSegment = "VIX";
+
+        //verify
+        String expectedErrorMessage = "Input segment is invalid";
+
+        //when
+        try {
+            romanNumericConverter.convertRomanSegmentIntoNumericValue(romanSegment);
+            fail("Should have thrown exception");
+        } catch (InvalidInputFormatException e) {
+            //then
+            assertEquals(expectedErrorMessage, e.getErrorMessage());
+        } catch (Exception e) {
+            fail("Should have thrown InvalidInputFormatException");
+        }
+
+        //Given
+        romanSegment = "VIIX";
+
+        //when
+        try {
+            romanNumericConverter.convertRomanSegmentIntoNumericValue(romanSegment);
+            fail("Should have thrown exception");
+        } catch (InvalidInputFormatException e) {
+            //then
+            assertEquals(expectedErrorMessage, e.getErrorMessage());
+        } catch (Exception e) {
+            fail("Should have thrown InvalidInputFormatException");
+        }
+
+        //Given
+        romanSegment = "VIIIX";
+
+        //when
+        try {
+            romanNumericConverter.convertRomanSegmentIntoNumericValue(romanSegment);
             fail("Should have thrown exception");
         } catch (InvalidInputFormatException e) {
             //then
@@ -866,7 +904,7 @@ public class ARomanNumeralConverter {
 
         //when
         try {
-            romanNumeralConverter.convertRomanSegmentIntoNumericValue(romanSegment);
+            assertEquals(40, romanNumericConverter.convertRomanSegmentIntoNumericValue(romanSegment).intValue());
         } catch (InvalidInputFormatException e) {
             //then
             fail("There shouldn't be any exception");
@@ -877,7 +915,7 @@ public class ARomanNumeralConverter {
 
         //when
         try {
-            romanNumeralConverter.convertRomanSegmentIntoNumericValue(romanSegment);
+            assertEquals(90, romanNumericConverter.convertRomanSegmentIntoNumericValue(romanSegment).intValue());
         } catch (InvalidInputFormatException e) {
             //then
             fail("There shouldn't be any exception");
@@ -888,7 +926,7 @@ public class ARomanNumeralConverter {
 
         //when
         try {
-            romanNumeralConverter.convertRomanSegmentIntoNumericValue(romanSegment);
+            assertEquals(1040, romanNumericConverter.convertRomanSegmentIntoNumericValue(romanSegment).intValue());
         } catch (InvalidInputFormatException e) {
             //then
             fail("There shouldn't be any exception");
@@ -899,7 +937,7 @@ public class ARomanNumeralConverter {
 
         //when
         try {
-            romanNumeralConverter.convertRomanSegmentIntoNumericValue(romanSegment);
+            assertEquals(1540, romanNumericConverter.convertRomanSegmentIntoNumericValue(romanSegment).intValue());
         } catch (InvalidInputFormatException e) {
             //then
             fail("There shouldn't be any exception");
@@ -910,7 +948,7 @@ public class ARomanNumeralConverter {
 
         //when
         try {
-            romanNumeralConverter.convertRomanSegmentIntoNumericValue(romanSegment);
+            assertEquals(1590, romanNumericConverter.convertRomanSegmentIntoNumericValue(romanSegment).intValue());
         } catch (InvalidInputFormatException e) {
             //then
             fail("There shouldn't be any exception");
@@ -929,7 +967,7 @@ public class ARomanNumeralConverter {
 
         //when
         try {
-            romanNumeralConverter.convertRomanSegmentIntoNumericValue(romanSegment);
+            romanNumericConverter.convertRomanSegmentIntoNumericValue(romanSegment);
             fail("Should have thrown exception");
         } catch (InvalidInputFormatException e) {
             //then
@@ -943,7 +981,7 @@ public class ARomanNumeralConverter {
 
         //when
         try {
-            romanNumeralConverter.convertRomanSegmentIntoNumericValue(romanSegment);
+            romanNumericConverter.convertRomanSegmentIntoNumericValue(romanSegment);
             fail("Should have thrown exception");
         } catch (InvalidInputFormatException e) {
             //then
@@ -957,7 +995,7 @@ public class ARomanNumeralConverter {
 
         //when
         try {
-            romanNumeralConverter.convertRomanSegmentIntoNumericValue(romanSegment);
+            romanNumericConverter.convertRomanSegmentIntoNumericValue(romanSegment);
             fail("Should have thrown exception");
         } catch (InvalidInputFormatException e) {
             //then
@@ -979,7 +1017,7 @@ public class ARomanNumeralConverter {
 
         //when
         try {
-            romanNumeralConverter.convertRomanSegmentIntoNumericValue(romanSegment);
+            romanNumericConverter.convertRomanSegmentIntoNumericValue(romanSegment);
             fail("Should have thrown exception");
         } catch (InvalidInputFormatException e) {
             //then
@@ -993,7 +1031,7 @@ public class ARomanNumeralConverter {
 
         //when
         try {
-            romanNumeralConverter.convertRomanSegmentIntoNumericValue(romanSegment);
+            romanNumericConverter.convertRomanSegmentIntoNumericValue(romanSegment);
             fail("Should have thrown exception");
         } catch (InvalidInputFormatException e) {
             //then
@@ -1008,7 +1046,7 @@ public class ARomanNumeralConverter {
 
         //when
         try {
-            romanNumeralConverter.convertRomanSegmentIntoNumericValue(romanSegment);
+            romanNumericConverter.convertRomanSegmentIntoNumericValue(romanSegment);
             fail("Should have thrown exception");
         } catch (InvalidInputFormatException e) {
             //then
@@ -1022,7 +1060,7 @@ public class ARomanNumeralConverter {
 
         //when
         try {
-            romanNumeralConverter.convertRomanSegmentIntoNumericValue(romanSegment);
+            romanNumericConverter.convertRomanSegmentIntoNumericValue(romanSegment);
             fail("Should have thrown exception");
         } catch (InvalidInputFormatException e) {
             //then
@@ -1036,7 +1074,7 @@ public class ARomanNumeralConverter {
 
         //when
         try {
-            romanNumeralConverter.convertRomanSegmentIntoNumericValue(romanSegment);
+            romanNumericConverter.convertRomanSegmentIntoNumericValue(romanSegment);
             fail("Should have thrown exception");
         } catch (InvalidInputFormatException e) {
             //then
@@ -1050,7 +1088,7 @@ public class ARomanNumeralConverter {
 
         //when
         try {
-            romanNumeralConverter.convertRomanSegmentIntoNumericValue(romanSegment);
+            romanNumericConverter.convertRomanSegmentIntoNumericValue(romanSegment);
             fail("Should have thrown exception");
         } catch (InvalidInputFormatException e) {
             //then
@@ -1064,7 +1102,7 @@ public class ARomanNumeralConverter {
 
         //when
         try {
-            romanNumeralConverter.convertRomanSegmentIntoNumericValue(romanSegment);
+            romanNumericConverter.convertRomanSegmentIntoNumericValue(romanSegment);
             fail("Should have thrown exception");
         } catch (InvalidInputFormatException e) {
             //then
@@ -1078,7 +1116,7 @@ public class ARomanNumeralConverter {
 
         //when
         try {
-            romanNumeralConverter.convertRomanSegmentIntoNumericValue(romanSegment);
+            romanNumericConverter.convertRomanSegmentIntoNumericValue(romanSegment);
             fail("Should have thrown exception");
         } catch (InvalidInputFormatException e) {
             //then
@@ -1099,7 +1137,7 @@ public class ARomanNumeralConverter {
 
         //when
         try {
-            romanNumeralConverter.convertRomanSegmentIntoNumericValue(romanSegment);
+            romanNumericConverter.convertRomanSegmentIntoNumericValue(romanSegment);
             fail("Should have thrown exception");
         } catch (InvalidInputFormatException e) {
             //then
@@ -1113,7 +1151,7 @@ public class ARomanNumeralConverter {
 
         //when
         try {
-            romanNumeralConverter.convertRomanSegmentIntoNumericValue(romanSegment);
+            romanNumericConverter.convertRomanSegmentIntoNumericValue(romanSegment);
             fail("Should have thrown exception");
         } catch (InvalidInputFormatException e) {
             //then
@@ -1127,7 +1165,7 @@ public class ARomanNumeralConverter {
 
         //when
         try {
-            romanNumeralConverter.convertRomanSegmentIntoNumericValue(romanSegment);
+            romanNumericConverter.convertRomanSegmentIntoNumericValue(romanSegment);
             fail("Should have thrown exception");
         } catch (InvalidInputFormatException e) {
             //then
@@ -1141,7 +1179,7 @@ public class ARomanNumeralConverter {
 
         //when
         try {
-            romanNumeralConverter.convertRomanSegmentIntoNumericValue(romanSegment);
+            romanNumericConverter.convertRomanSegmentIntoNumericValue(romanSegment);
             fail("Should have thrown exception");
         } catch (InvalidInputFormatException e) {
             //then
@@ -1155,7 +1193,7 @@ public class ARomanNumeralConverter {
 
         //when
         try {
-            romanNumeralConverter.convertRomanSegmentIntoNumericValue(romanSegment);
+            romanNumericConverter.convertRomanSegmentIntoNumericValue(romanSegment);
             fail("Should have thrown exception");
         } catch (InvalidInputFormatException e) {
             //then
@@ -1169,7 +1207,7 @@ public class ARomanNumeralConverter {
 
         //when
         try {
-            romanNumeralConverter.convertRomanSegmentIntoNumericValue(romanSegment);
+            romanNumericConverter.convertRomanSegmentIntoNumericValue(romanSegment);
             fail("Should have thrown exception");
         } catch (InvalidInputFormatException e) {
             //then
@@ -1190,7 +1228,7 @@ public class ARomanNumeralConverter {
 
         //when
         try {
-            romanNumeralConverter.convertRomanSegmentIntoNumericValue(romanSegment);
+            romanNumericConverter.convertRomanSegmentIntoNumericValue(romanSegment);
             fail("Should have thrown exception");
         } catch (InvalidInputFormatException e) {
             //then
@@ -1204,7 +1242,7 @@ public class ARomanNumeralConverter {
 
         //when
         try {
-            romanNumeralConverter.convertRomanSegmentIntoNumericValue(romanSegment);
+            romanNumericConverter.convertRomanSegmentIntoNumericValue(romanSegment);
             fail("Should have thrown exception");
         } catch (InvalidInputFormatException e) {
             //then
@@ -1225,7 +1263,7 @@ public class ARomanNumeralConverter {
 
         //when
         try {
-            romanNumeralConverter.convertRomanSegmentIntoNumericValue(romanSegment);
+            romanNumericConverter.convertRomanSegmentIntoNumericValue(romanSegment);
             fail("Should have thrown exception");
         } catch (InvalidInputFormatException e) {
             //then
@@ -1236,7 +1274,7 @@ public class ARomanNumeralConverter {
         romanSegment = "IXI";
         //when
         try {
-            romanNumeralConverter.convertRomanSegmentIntoNumericValue(romanSegment);
+            romanNumericConverter.convertRomanSegmentIntoNumericValue(romanSegment);
             fail("Should have thrown exception");
         } catch (InvalidInputFormatException e) {
             //then
@@ -1246,7 +1284,7 @@ public class ARomanNumeralConverter {
         romanSegment = "IXX";
         //when
         try {
-            romanNumeralConverter.convertRomanSegmentIntoNumericValue(romanSegment);
+            romanNumericConverter.convertRomanSegmentIntoNumericValue(romanSegment);
             fail("Should have thrown exception");
         } catch (InvalidInputFormatException e) {
             //then
@@ -1257,7 +1295,7 @@ public class ARomanNumeralConverter {
         romanSegment = "IXL";
         //when
         try {
-            romanNumeralConverter.convertRomanSegmentIntoNumericValue(romanSegment);
+            romanNumericConverter.convertRomanSegmentIntoNumericValue(romanSegment);
             fail("Should have thrown exception");
         } catch (InvalidInputFormatException e) {
             //then
@@ -1268,7 +1306,7 @@ public class ARomanNumeralConverter {
         romanSegment = "IXC";
         //when
         try {
-            romanNumeralConverter.convertRomanSegmentIntoNumericValue(romanSegment);
+            romanNumericConverter.convertRomanSegmentIntoNumericValue(romanSegment);
             fail("Should have thrown exception");
         } catch (InvalidInputFormatException e) {
             //then
@@ -1279,7 +1317,7 @@ public class ARomanNumeralConverter {
         romanSegment = "IXD";
         //when
         try {
-            romanNumeralConverter.convertRomanSegmentIntoNumericValue(romanSegment);
+            romanNumericConverter.convertRomanSegmentIntoNumericValue(romanSegment);
             fail("Should have thrown exception");
         } catch (InvalidInputFormatException e) {
             //then
@@ -1289,7 +1327,7 @@ public class ARomanNumeralConverter {
         romanSegment = "IXM";
         //when
         try {
-            romanNumeralConverter.convertRomanSegmentIntoNumericValue(romanSegment);
+            romanNumericConverter.convertRomanSegmentIntoNumericValue(romanSegment);
             fail("Should have thrown exception");
         } catch (InvalidInputFormatException e) {
             //then
@@ -1301,7 +1339,7 @@ public class ARomanNumeralConverter {
 
         //when
         try {
-            romanNumeralConverter.convertRomanSegmentIntoNumericValue(romanSegment);
+            romanNumericConverter.convertRomanSegmentIntoNumericValue(romanSegment);
             fail("Should have thrown exception");
         } catch (InvalidInputFormatException e) {
             //then
@@ -1313,7 +1351,7 @@ public class ARomanNumeralConverter {
 
         //when
         try {
-            romanNumeralConverter.convertRomanSegmentIntoNumericValue(romanSegment);
+            romanNumericConverter.convertRomanSegmentIntoNumericValue(romanSegment);
             fail("Should have thrown exception");
         } catch (InvalidInputFormatException e) {
             //then
@@ -1332,7 +1370,7 @@ public class ARomanNumeralConverter {
 
         //when
         try {
-            romanNumeralConverter.convertRomanSegmentIntoNumericValue(romanSegment);
+            romanNumericConverter.convertRomanSegmentIntoNumericValue(romanSegment);
             fail("Should have thrown exception");
         } catch (InvalidInputFormatException e) {
             //then
@@ -1346,7 +1384,7 @@ public class ARomanNumeralConverter {
 
         //when
         try {
-            romanNumeralConverter.convertRomanSegmentIntoNumericValue(romanSegment);
+            romanNumericConverter.convertRomanSegmentIntoNumericValue(romanSegment);
             fail("Should have thrown exception");
         } catch (InvalidInputFormatException e) {
             //then
@@ -1360,7 +1398,7 @@ public class ARomanNumeralConverter {
 
         //when
         try {
-            romanNumeralConverter.convertRomanSegmentIntoNumericValue(romanSegment);
+            romanNumericConverter.convertRomanSegmentIntoNumericValue(romanSegment);
             fail("Should have thrown exception");
         } catch (InvalidInputFormatException e) {
             //then
@@ -1374,7 +1412,7 @@ public class ARomanNumeralConverter {
 
         //when
         try {
-            romanNumeralConverter.convertRomanSegmentIntoNumericValue(romanSegment);
+            romanNumericConverter.convertRomanSegmentIntoNumericValue(romanSegment);
             fail("Should have thrown exception");
         } catch (InvalidInputFormatException e) {
             //then
@@ -1394,7 +1432,7 @@ public class ARomanNumeralConverter {
 
         //when
         try {
-            romanNumeralConverter.convertRomanSegmentIntoNumericValue(romanSegment);
+            romanNumericConverter.convertRomanSegmentIntoNumericValue(romanSegment);
             fail("Should have thrown exception");
         } catch (InvalidInputFormatException e) {
             //then
@@ -1408,7 +1446,7 @@ public class ARomanNumeralConverter {
 
         //when
         try {
-            romanNumeralConverter.convertRomanSegmentIntoNumericValue(romanSegment);
+            romanNumericConverter.convertRomanSegmentIntoNumericValue(romanSegment);
             fail("Should have thrown exception");
         } catch (InvalidInputFormatException e) {
             //then
@@ -1422,7 +1460,7 @@ public class ARomanNumeralConverter {
 
         //when
         try {
-            romanNumeralConverter.convertRomanSegmentIntoNumericValue(romanSegment);
+            romanNumericConverter.convertRomanSegmentIntoNumericValue(romanSegment);
             fail("Should have thrown exception");
         } catch (InvalidInputFormatException e) {
             //then
@@ -1436,7 +1474,7 @@ public class ARomanNumeralConverter {
 
         //when
         try {
-            romanNumeralConverter.convertRomanSegmentIntoNumericValue(romanSegment);
+            romanNumericConverter.convertRomanSegmentIntoNumericValue(romanSegment);
             fail("Should have thrown exception");
         } catch (InvalidInputFormatException e) {
             //then
@@ -1457,7 +1495,7 @@ public class ARomanNumeralConverter {
 
         //when
         try {
-            romanNumeralConverter.convertRomanSegmentIntoNumericValue(romanSegment);
+            romanNumericConverter.convertRomanSegmentIntoNumericValue(romanSegment);
             fail("Should have thrown exception");
         } catch (InvalidInputFormatException e) {
             //then
@@ -1471,7 +1509,7 @@ public class ARomanNumeralConverter {
 
         //when
         try {
-            romanNumeralConverter.convertRomanSegmentIntoNumericValue(romanSegment);
+            romanNumericConverter.convertRomanSegmentIntoNumericValue(romanSegment);
             fail("Should have thrown exception");
         } catch (InvalidInputFormatException e) {
             //then
@@ -1485,7 +1523,7 @@ public class ARomanNumeralConverter {
 
         //when
         try {
-            romanNumeralConverter.convertRomanSegmentIntoNumericValue(romanSegment);
+            romanNumericConverter.convertRomanSegmentIntoNumericValue(romanSegment);
             fail("Should have thrown exception");
         } catch (InvalidInputFormatException e) {
             //then
@@ -1505,7 +1543,7 @@ public class ARomanNumeralConverter {
 
         //when
         try {
-            romanNumeralConverter.convertRomanSegmentIntoNumericValue(romanSegment);
+            romanNumericConverter.convertRomanSegmentIntoNumericValue(romanSegment);
             fail("Should have thrown exception");
         } catch (InvalidInputFormatException e) {
             //then
@@ -1513,21 +1551,6 @@ public class ARomanNumeralConverter {
         } catch (Exception e) {
             fail("Should have thrown InvalidInputFormatException");
         }
-
-        //Given
-        romanSegment = "1905";       //todo - this should pass but later
-
-        //when
-        try {
-            romanNumeralConverter.convertRomanSegmentIntoNumericValue(romanSegment);
-            fail("Should have thrown exception");
-        } catch (InvalidInputFormatException e) {
-            //then
-            assertEquals(expectedErrorMessage, e.getErrorMessage());
-        } catch (Exception e) {
-            fail("Should have thrown InvalidInputFormatException");
-        }
-
     }
 
 }

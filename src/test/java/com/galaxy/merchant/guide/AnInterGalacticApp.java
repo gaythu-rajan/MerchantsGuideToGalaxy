@@ -51,9 +51,9 @@ public class AnInterGalacticApp {
         assertFalse(errContent.toString().contains("Error reading notes from the file."));
 
         assertTrue(outContent.toString().contains("pish tegj glob glob is 42"));
-        assertTrue(outContent.toString().contains("glob prok Silver is 68 Credits"));
-        assertTrue(outContent.toString().contains("glob prok Gold is 57800 Credits"));
-        assertTrue(outContent.toString().contains("glob prok Iron is 782 Credits"));
+        assertTrue(outContent.toString().contains("glob prok silver is 68 credits"));
+        assertTrue(outContent.toString().contains("glob prok gold is 57800 credits"));
+        assertTrue(outContent.toString().contains("glob prok iron is 782 credits"));
         assertTrue(outContent.toString().contains(InterGalacticAppConstants.DEFAULT_ANSWER));
     }
 

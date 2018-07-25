@@ -5,7 +5,7 @@ package com.galaxy.merchant.guide;
  *
  * @author Gayathri Thiyagarajan
  */
-public enum RomanChars {
+public enum RomanNumerals {
     Z(0),
     I(1),
     V(5),
@@ -17,7 +17,7 @@ public enum RomanChars {
 
     private Integer numericValue;
 
-    RomanChars(Integer numericValue) {
+    RomanNumerals(Integer numericValue) {
         this.numericValue = numericValue;
     }
 
@@ -26,7 +26,7 @@ public enum RomanChars {
     }
 
     //True if this less than nextPos; False if greater than nextPos
-    public boolean compare(RomanChars letterAtNextPos) {
+    public boolean compare(RomanNumerals letterAtNextPos) {
         return this.numericValue < letterAtNextPos.numericValue;
     }
 
