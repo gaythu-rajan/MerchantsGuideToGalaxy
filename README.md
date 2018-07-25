@@ -1,12 +1,12 @@
 Merchant's Guide To Galaxy
 
-##H2 
+# H1 
 Assumptions
 
 InterGalactic App is Case insensitive glob=GLOB
 Only roman letters will be recognised as valid units
 
-##H2
+# H1
 Design
 
 InterGalacticApp can read notes from a file and decipher the notes into three classifications.
@@ -22,7 +22,7 @@ Answers correspond to each query in the order that they were asked and is case s
 
 If the app cannot comprehend the inputs, it responds with the default answer "I have no idea what you are talking about".
 
-#H1 
+# H1 
 How To Run
 
 From command line
