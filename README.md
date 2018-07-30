@@ -1,30 +1,47 @@
-Merchant's Guide To Galaxy
+# Merchant's Guide To Galaxy
 
-# Assumptions
-
-- InterGalactic App is Case insensitive glob=GLOB
-- Only roman letters will be recognised as valid earthly currency
+## Environment
+- Java 8
+- Gradle 2.8 or above
 
 # Design
 
-InterGalacticApp can read notes from a file and decipher the notes into three classifications.
-- List of Galactic Unit conversion factors - Galactic currency and its Earthly equivalent in roman numerals
-- List of transactions containing the Earth materials being transacted and how much they were sold for
-- List of queries
+InterGalacticApp reads notes given a file and answers queries that it detects from the notes.
 
-InterGalacticApp uses corresponding Parsers to interpret the key inputs using which the subsequent queries will be answered. If these inputs are invalid or absent, the app will not be able to answer any queries and will give default answer "I have no idea what you are talking about"
+The app interprets the notes into three classifications.
+- List of lines detected to be galactic numeral conversion factors
+- List of lines detected to be transactions containing the Earth materials being transacted and how much they are worth
+- List of lines detected to be queries
 
-... QueryResponder then takes the parsed inputs, calculates and constructs the answers. 
+It uses Parsers to parse and extract the conversion factors from the above inputs.
 
-... Answers correspond to each query in the order that they were asked and is case sensitive.
+There are two converters
+  ... InterGalacticToRomanConverter - converts intergalactic phrase into roman numeric e.g. glob prok = IV
+  ... RomanToArabicConverter - converts Roman numeric into equivalent Arabic numeric value e.g. IV = 4
 
-... If the app cannot comprehend the inputs, it responds with the default answer "I have no idea what you are talking about".
+QueryResponder using these conversion factors calculates and constructs the answers.
+The answers correspond to each query in the order that they were asked.
+
+If the app cannot comprehend the inputs or extract conversion factors,
+it responds with a single default answer "I have no idea what you are talking about".
+If the app cannot understand one or more questions from a list of valid questions,
+it responds with default answer for each of the invalid query and valid answer for the rest.
+
+ # Assumptions
+
+- InterGalactic App is case insensitive glob=GLOB
+- Only roman letters will be recognised as valid earthly currency
+- The app detects only queries of format "how many ...?" or "how much ...?"
+- Only accepts text files with extension .txt
+
 
 # How To Run
 
-From command line
+From command line :
 
-*gradle run -PpathToNotes=/Users/xxxx/Desktop/notes.txt*
+Compile and build  - *gradle clean build*
+Run Tests          - *gradle test*
+Run                - *gradle run -PpathToNotes=/Users/xxxx/Desktop/notes.txt*
 
-**pathToNotes** is the absolute path containing the file with input data
+*where **pathToNotes** is the absolute path containing the file with input data*
 

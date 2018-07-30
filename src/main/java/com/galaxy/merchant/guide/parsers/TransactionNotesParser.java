@@ -1,4 +1,4 @@
-package com.galaxy.merchant.guide;
+package com.galaxy.merchant.guide.parsers;
 
 import static com.galaxy.merchant.guide.constants.InterGalacticAppConstants.PATTERN_OF_EARTH_MATERIALS;
 import static java.util.regex.Pattern.compile;
@@ -13,14 +13,16 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
+import com.galaxy.merchant.guide.converters.InterGalacticToRomanConverter;
+import com.galaxy.merchant.guide.converters.RomanToArabicConverter;
 import com.galaxy.merchant.guide.exceptions.InvalidInputFormatException;
 
 /**
- * TransactionNotesParser class to parse lines from notes to extract transaction
+ * TransactionNotesParser parses lines from notes to extract transaction
  * information in order to calculate the number of credits that each EarthMaterial is worth
  * @author Gayathri Thiyagarajan
  */
-class TransactionNotesParser implements NotesParser {
+public class TransactionNotesParser implements NotesParser {
 
     private String EARTH_MATERIAL_TRANSACTION_FORMAT;
 
@@ -47,8 +49,8 @@ class TransactionNotesParser implements NotesParser {
         Pattern compiledTransactionPattern = compile(EARTH_MATERIAL_TRANSACTION_FORMAT, Pattern.CASE_INSENSITIVE);
         Pattern compiledEarthMaterialPattern = compile(PATTERN_OF_EARTH_MATERIALS, Pattern.CASE_INSENSITIVE);
 
-        InterGalacticPhraseConverter interGalacticPhraseConverter = new InterGalacticPhraseConverter(interGalacticConversionUnits);
-        RomanNumericConverter romanNumericConverter = new RomanNumericConverter();
+        InterGalacticToRomanConverter interGalacticToRomanConverter = new InterGalacticToRomanConverter(interGalacticConversionUnits);
+        RomanToArabicConverter romanToArabicConverter = new RomanToArabicConverter();
         Matcher matcher;
 
         for (String aLineOfTransaction : earthMaterialTransactions) {
@@ -73,8 +75,8 @@ class TransactionNotesParser implements NotesParser {
                 String interGalacticValue = trim(substringBefore(transaction, matcher.group(1)));
                 String earthMaterial = matcher.group(1);
 
-                Integer quantityOfMaterial = romanNumericConverter.convertRomanSegmentIntoNumericValue(
-                                                interGalacticPhraseConverter.convertInterGalacticPhraseIntoRomanSegment(interGalacticValue));
+                Integer quantityOfMaterial = romanToArabicConverter.convertRomanSegmentIntoNumericValue(
+                                                interGalacticToRomanConverter.convertInterGalacticPhraseIntoRomanSegment(interGalacticValue));
                 double numberOfCreditsPerUnitOfMaterial = (double) totalCreditsInTheTransaction / quantityOfMaterial;
                 creditsForEarthMaterialTransactions.put(earthMaterial, numberOfCreditsPerUnitOfMaterial);
             }

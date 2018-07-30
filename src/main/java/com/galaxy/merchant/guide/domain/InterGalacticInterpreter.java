@@ -1,4 +1,4 @@
-package com.galaxy.merchant.guide;
+package com.galaxy.merchant.guide.domain;
 
 import static com.galaxy.merchant.guide.constants.InterGalacticAppConstants.DEFAULT_ANSWER;
 import static com.galaxy.merchant.guide.constants.InterGalacticAppConstants.PLACEHOLDER_FOR_UNPARSEABLE_QUESTIONS;
@@ -14,13 +14,15 @@ import java.util.stream.Collectors;
 import com.galaxy.merchant.guide.exceptions.InvalidInputFormatException;
 import com.galaxy.merchant.guide.exceptions.InvalidQueryException;
 import com.galaxy.merchant.guide.exceptions.NoInputProvidedException;
+import com.galaxy.merchant.guide.parsers.InterGalacticNumeralNotesParser;
+import com.galaxy.merchant.guide.parsers.TransactionNotesParser;
 
 /**
- * InterGalacticDecipherer deciphers the lines of notes to extract the relevant conversion units
+ * InterGalacticInterpreter interprets the lines of notes to extract the relevant conversion units
  * and turns queries into answers
  *
  */
-class InterGalacticDecipherer {
+public class InterGalacticInterpreter {
 
     private static final String HOW_MUCH_QUESTION_START = "how much";
     private static final String HOW_MANY_QUESTION_START = "how many";
@@ -39,16 +41,16 @@ class InterGalacticDecipherer {
 
 
     /**
-     * Deciphers lines of text and answers queries in the line of text
+     * Interprets lines of text and answers queries in the line of text
      * @param linesOfText Lines of input text as read from the file
-     * @throws NoInputProvidedException when there are no notes to decipher from the file
+     * @throws NoInputProvidedException when there are no notes to interpret from the file
      * @throws InvalidInputFormatException from the conversion downstream if any of units
      *                                      or transactions or queries don't conform to the pattern
      */
-    void decipher(String[] linesOfText) throws NoInputProvidedException, InvalidInputFormatException {
+    public HashMap<String, String> interpret(String[] linesOfText) throws NoInputProvidedException, InvalidInputFormatException {
 
         if(linesOfText.length == 0) {
-            throw new NoInputProvidedException("No inputs provided to decipher");
+            throw new NoInputProvidedException("No inputs provided to interpret");
         }
 
         // Parse each line and put it in respective buckets
@@ -65,8 +67,8 @@ class InterGalacticDecipherer {
         }
 
         // parse the galactic units conversion bucket and get the galactic conversion units e.g. Glob = I
-        InterGalacticUnitConversionNotesParser interGalacticUnitConversionNotesParser = new InterGalacticUnitConversionNotesParser();
-        interGalacticConversionUnits = interGalacticUnitConversionNotesParser.parseNotes(bucketOfNotesOnInterGalacticConversionUnits);
+        InterGalacticNumeralNotesParser interGalacticNumeralNotesParser = new InterGalacticNumeralNotesParser();
+        interGalacticConversionUnits = interGalacticNumeralNotesParser.parseNotes(bucketOfNotesOnInterGalacticConversionUnits);
 
         // parse the earth transaction bucket and get the number of credits per Earth Material (value stored as double but rounded off later)
         //e.g Silver=17 (credits)
@@ -106,6 +108,8 @@ class InterGalacticDecipherer {
         if(queriesAndTheirAnswers.size() == 0) {
             queriesAndTheirAnswers.put(PLACEHOLDER_FOR_UNPARSEABLE_QUESTIONS, DEFAULT_ANSWER);
         }
+
+        return queriesAndTheirAnswers;
     }
 
     /**

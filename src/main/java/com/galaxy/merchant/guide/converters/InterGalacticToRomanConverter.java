@@ -1,4 +1,4 @@
-package com.galaxy.merchant.guide;
+package com.galaxy.merchant.guide.converters;
 
 import static org.apache.commons.lang3.StringUtils.EMPTY;
 import static org.apache.commons.lang3.StringUtils.SPACE;
@@ -13,16 +13,16 @@ import java.util.stream.Collectors;
 import com.galaxy.merchant.guide.exceptions.InvalidInputFormatException;
 
 /**
- * Converter to convert InterGalactic Phrase into Roman numeric phrase
+ * Converter to convert InterGalactic numeric into Roman numeric
  *
  * @author Gayathri Thiyagarajan
  */
-class InterGalacticPhraseConverter {
+public class InterGalacticToRomanConverter {
 
-    //Map of interGalacticConversionUnits and their equivalent numeral e.g. glob-I
+    //Map of interGalactic numeral and their equivalent roman numeral e.g. glob-I
     private HashMap<String, String> interGalacticConversionUnits = new HashMap<>();
 
-    InterGalacticPhraseConverter(HashMap<String, String> interGalacticConversionUnits) {
+    public InterGalacticToRomanConverter(HashMap<String, String> interGalacticConversionUnits) {
         this.interGalacticConversionUnits = interGalacticConversionUnits;
     }
 
@@ -33,7 +33,7 @@ class InterGalacticPhraseConverter {
      * @return Equivalent roman segment parsed using Intergalactic units "II"
      * @throws InvalidInputFormatException if the Intergalactic Phrase does not contain a valid inter galactic units from interGalacticConversionUnits
      */
-    String convertInterGalacticPhraseIntoRomanSegment(String interGalacticPhrase) throws InvalidInputFormatException {
+    public String convertInterGalacticPhraseIntoRomanSegment(String interGalacticPhrase) throws InvalidInputFormatException {
 
         checkInterGalacticPhraseContainsValidInterGalacticUnits(interGalacticPhrase);
 

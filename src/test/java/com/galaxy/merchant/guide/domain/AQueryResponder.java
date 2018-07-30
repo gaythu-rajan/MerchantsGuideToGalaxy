@@ -1,4 +1,4 @@
-package com.galaxy.merchant.guide;
+package com.galaxy.merchant.guide.domain;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;

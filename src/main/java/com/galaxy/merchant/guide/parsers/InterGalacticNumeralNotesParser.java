@@ -1,4 +1,4 @@
-package com.galaxy.merchant.guide;
+package com.galaxy.merchant.guide.parsers;
 
 import java.util.HashMap;
 import java.util.List;
@@ -6,12 +6,12 @@ import java.util.List;
 import org.apache.commons.lang3.StringUtils;
 
 /**
- * InterGalacticUnitConversionNotesParser class parses lines from notes to
- * extract Galactic Unit conversion data into a map e.g."glob is I" to glob-I
+ * InterGalacticNumeralNotesParser parses lines from notes to
+ * map InterGalactic numeral to roman numerals e.g."glob is I" to glob-I
  *
  * @author Gayathri Thiyagarajan
  */
-class InterGalacticUnitConversionNotesParser implements NotesParser {
+public class InterGalacticNumeralNotesParser implements NotesParser {
 
     public HashMap<String, String> parseNotes(List<String> galacticUnitLinesFromNotes) {
 

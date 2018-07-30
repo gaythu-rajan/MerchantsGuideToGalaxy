@@ -7,7 +7,7 @@ package com.galaxy.merchant.guide.exceptions;
  */
 public class NoInputProvidedException extends Exception {
 
-    String errorMessage;
+    private String errorMessage;
 
     public NoInputProvidedException(String errorMessage) {
         this.errorMessage = errorMessage;

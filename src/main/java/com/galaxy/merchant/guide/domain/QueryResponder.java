@@ -1,4 +1,4 @@
-package com.galaxy.merchant.guide;
+package com.galaxy.merchant.guide.domain;
 
 import static com.galaxy.merchant.guide.constants.InterGalacticAppConstants.PATTERN_OF_EARTH_MATERIALS;
 import static org.apache.commons.lang3.StringUtils.replacePattern;
@@ -10,27 +10,30 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import com.galaxy.merchant.guide.constants.InterGalacticAppConstants;
+import com.galaxy.merchant.guide.converters.InterGalacticToRomanConverter;
+import com.galaxy.merchant.guide.converters.RomanToArabicConverter;
 import com.galaxy.merchant.guide.exceptions.InvalidInputFormatException;
 import com.galaxy.merchant.guide.exceptions.InvalidQueryException;
 import org.apache.commons.lang3.StringUtils;
 
 /**
- * This class responds to queries passed to it by InterGalacticDecipherer
+ * This class constructs response to queries passed to it by InterGalacticInterpreter
  *
  * @author Gayathri Thiyagarajan
  */
-public class QueryResponder {
+class QueryResponder {
 
     private String PATTERN_OF_TRANSACTION_PART ;
 
     //Map of earth material transactions e.g. Silver-17f
     private HashMap<String, Double> creditsForEarthMaterials = new HashMap<>();
 
-    //Map of interGalacticConversionUnits and their equivalent numeral e.g. glob-I
+    //Map of interGalactic numeral and their equivalent roman numeral e.g. glob-I
     private HashMap<String, String> interGalacticConversionUnits = new HashMap<>();
 
-    private RomanNumericConverter romanNumericConverter;
-    private InterGalacticPhraseConverter interGalacticPhraseConverter;
+    private RomanToArabicConverter romanToArabicConverter;
+
+    private InterGalacticToRomanConverter interGalacticToRomanConverter;
 
     private static final String QUESTION_MARK = "?";
 
@@ -38,8 +41,8 @@ public class QueryResponder {
         this.creditsForEarthMaterials = creditsForEarthMaterials;
         this.interGalacticConversionUnits = interGalacticConversionUnits;
 
-        interGalacticPhraseConverter = new InterGalacticPhraseConverter(interGalacticConversionUnits);
-        romanNumericConverter = new RomanNumericConverter();
+        interGalacticToRomanConverter = new InterGalacticToRomanConverter(interGalacticConversionUnits);
+        romanToArabicConverter = new RomanToArabicConverter();
 
         Set<String> interGalacticUnits = interGalacticConversionUnits.keySet();
         PATTERN_OF_TRANSACTION_PART = interGalacticUnits.stream().map(e -> e).collect(Collectors.joining("|"));
@@ -47,7 +50,7 @@ public class QueryResponder {
     }
 
     /**
-     * Answers query on how much an inter galactic amount is worth in earth money
+     * Answers query on how much an inter galactic amount is in equivalent earth amount
      *
      * @param query E.g. how much is pish tegj glob glob ?
      * @return galacticAmount as numeral in answer format "pish tegj glob glob is 42"
@@ -60,20 +63,12 @@ public class QueryResponder {
         Integer answer;
 
         try {
-            String romanEquivalentOfGalacticAmount = interGalacticPhraseConverter.convertInterGalacticPhraseIntoRomanSegment(galacticAmount);
-            answer = romanNumericConverter.convertRomanSegmentIntoNumericValue(romanEquivalentOfGalacticAmount);
+            String romanEquivalentOfGalacticAmount = interGalacticToRomanConverter.convertInterGalacticPhraseIntoRomanSegment(galacticAmount);
+            answer = romanToArabicConverter.convertRomanSegmentIntoNumericValue(romanEquivalentOfGalacticAmount);
         } catch (InvalidInputFormatException e) {
             throw new InvalidQueryException(InterGalacticAppConstants.DEFAULT_ANSWER);
         }
         return galacticAmount + " is " + answer;
-    }
-
-    HashMap<String, Double> getCreditsForEarthMaterials() {
-        return creditsForEarthMaterials;
-    }
-
-    HashMap<String, String> getInterGalacticConversionUnits() {
-        return interGalacticConversionUnits;
     }
 
     /**
@@ -98,8 +93,8 @@ public class QueryResponder {
                 String transactionPart = trim(replacePattern(transactionInTheQuery, PATTERN_OF_EARTH_MATERIALS, StringUtils.EMPTY));
                 String earthMaterial = trim(replacePattern(transactionInTheQuery, PATTERN_OF_TRANSACTION_PART, StringUtils.EMPTY));
 
-                String romanEquivalentOfTheTransaction = interGalacticPhraseConverter.convertInterGalacticPhraseIntoRomanSegment(transactionPart);
-                Integer quantityOfEarthMaterial = romanNumericConverter.convertRomanSegmentIntoNumericValue(romanEquivalentOfTheTransaction);
+                String romanEquivalentOfTheTransaction = interGalacticToRomanConverter.convertInterGalacticPhraseIntoRomanSegment(transactionPart);
+                Integer quantityOfEarthMaterial = romanToArabicConverter.convertRomanSegmentIntoNumericValue(romanEquivalentOfTheTransaction);
 
                 if (creditsForEarthMaterials.containsKey(earthMaterial)) {
                     numberOfCredits = (int) Math.round(creditsForEarthMaterials.get(earthMaterial) * quantityOfEarthMaterial);
@@ -114,6 +109,14 @@ public class QueryResponder {
         }
 
         return transactionInTheQuery + " is " + numberOfCredits + " credits";
+    }
+
+    HashMap<String, Double> getCreditsForEarthMaterials() {
+        return creditsForEarthMaterials;
+    }
+
+    HashMap<String, String> getInterGalacticConversionUnits() {
+        return interGalacticConversionUnits;
     }
 
     static class QueryResponderBuilder {

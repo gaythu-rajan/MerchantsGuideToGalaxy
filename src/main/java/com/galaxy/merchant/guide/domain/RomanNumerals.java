@@ -1,7 +1,7 @@
-package com.galaxy.merchant.guide;
+package com.galaxy.merchant.guide.domain;
 
 /**
- * Roman Characters Enumeration
+ * Enumeration of Roman Numerals
  *
  * @author Gayathri Thiyagarajan
  */

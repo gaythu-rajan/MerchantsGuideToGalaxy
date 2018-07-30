@@ -15,7 +15,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * Test for InterGalactic Decipherer App which can read file from command line and parse texts
+ * Test for InterGalactic Interpreter App which can read file from command line and parse texts
  *
  * @author Gayathri Thiyagarajan
  */
@@ -73,15 +73,30 @@ public class AnInterGalacticApp {
     }
 
     @Test
-    public void failsForInvalidPath() {
+    public void failsForNonTextFile() {
         //Given
-        String[] args = {"sdfjknad;fiehr0q9019i-1233notestxt"};
+        String[] args = {"/Users/gthiyaga/Documents/MerchantsGuideToGalaxy/src/test/resources/not_a_text_file.pdf"};
 
         //when
         InterGalacticApp.main(args);
 
         //then
-        assertEquals("Error reading notes from the file sdfjknad;fiehr0q9019i-1233notestxt", trim(errContent.toString()));
+        assertEquals("Invalid file format. Accepted format(s) : .txt", trim(errContent.toString()));
+
+
+        assertTrue(isEmpty(outContent.toString()));
+    }
+
+    @Test
+    public void failsForInvalidPath() {
+        //Given
+        String[] args = {"sdfjknad;fiehr0q9019i-1233notes.txt"};
+
+        //when
+        InterGalacticApp.main(args);
+
+        //then
+        assertEquals("Error reading notes from the file sdfjknad;fiehr0q9019i-1233notes.txt", trim(errContent.toString()));
 
         assertTrue(isEmpty(outContent.toString()));
     }
@@ -153,7 +168,7 @@ public class AnInterGalacticApp {
         InterGalacticApp.main(args);
 
         //then
-        assertEquals("No inputs provided to decipher", trim(errContent.toString()));
+        assertEquals("No inputs provided to interpret", trim(errContent.toString()));
 
         assertTrue(isEmpty(outContent.toString()));
     }

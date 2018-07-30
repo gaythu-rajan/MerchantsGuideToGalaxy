@@ -1,12 +1,13 @@
 package com.galaxy.merchant.guide.exceptions;
 
 /**
- * Exception class to catch invalid queries
+ * Exception class to define invalid queries
  *
  * @author Gayathri Thiyagarajan
  */
 public class InvalidQueryException extends Throwable {
-    String errorMessage;
+
+    private String errorMessage;
 
     public InvalidQueryException(String errorMessage) {
         this.errorMessage = errorMessage;

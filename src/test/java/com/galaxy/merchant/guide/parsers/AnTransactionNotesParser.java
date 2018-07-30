@@ -1,4 +1,4 @@
-package com.galaxy.merchant.guide;
+package com.galaxy.merchant.guide.parsers;
 
 import static java.util.Arrays.asList;
 import static org.junit.Assert.assertEquals;
@@ -7,6 +7,7 @@ import static org.junit.Assert.assertNotNull;
 import java.util.HashMap;
 
 import com.galaxy.merchant.guide.exceptions.InvalidInputFormatException;
+import com.galaxy.merchant.guide.parsers.TransactionNotesParser;
 import org.junit.Before;
 import org.junit.Test;
 

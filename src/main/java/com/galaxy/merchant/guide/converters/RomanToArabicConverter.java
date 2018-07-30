@@ -1,29 +1,30 @@
-package com.galaxy.merchant.guide;
+package com.galaxy.merchant.guide.converters;
 
-import static com.galaxy.merchant.guide.RomanNumerals.C;
-import static com.galaxy.merchant.guide.RomanNumerals.D;
-import static com.galaxy.merchant.guide.RomanNumerals.I;
-import static com.galaxy.merchant.guide.RomanNumerals.L;
-import static com.galaxy.merchant.guide.RomanNumerals.M;
-import static com.galaxy.merchant.guide.RomanNumerals.V;
-import static com.galaxy.merchant.guide.RomanNumerals.X;
-import static com.galaxy.merchant.guide.RomanNumerals.Z;
-import static com.galaxy.merchant.guide.RomanNumerals.valueOf;
+import static com.galaxy.merchant.guide.domain.RomanNumerals.C;
+import static com.galaxy.merchant.guide.domain.RomanNumerals.D;
+import static com.galaxy.merchant.guide.domain.RomanNumerals.I;
+import static com.galaxy.merchant.guide.domain.RomanNumerals.L;
+import static com.galaxy.merchant.guide.domain.RomanNumerals.M;
+import static com.galaxy.merchant.guide.domain.RomanNumerals.V;
+import static com.galaxy.merchant.guide.domain.RomanNumerals.X;
+import static com.galaxy.merchant.guide.domain.RomanNumerals.Z;
+import static com.galaxy.merchant.guide.domain.RomanNumerals.valueOf;
 import static org.apache.commons.lang3.StringUtils.countMatches;
 import static org.apache.commons.lang3.StringUtils.isNoneBlank;
 
 import java.util.Arrays;
 import java.util.regex.Pattern;
 
+import com.galaxy.merchant.guide.domain.RomanNumerals;
 import com.galaxy.merchant.guide.exceptions.InvalidInputFormatException;
 import org.apache.commons.lang3.ArrayUtils;
 
 /**
- * Converter to convert an roman segment into numeric value.
+ * Converter to convert a roman numeric into arabic numeric.
  *
  * @author Gayathri Thiyagarajan
  */
-public class RomanNumericConverter {
+public class RomanToArabicConverter {
 
     private static String MORE_THAN_3_IN_A_ROW_I = "(I{4,}+)";
     private static String MORE_THAN_3_IN_A_ROW_X = "(X{4,}+)";
@@ -43,9 +44,9 @@ public class RomanNumericConverter {
      *
      * @param romanSegment valid roman segment
      * @return equivalent numeric value
-     * @throws InvalidInputFormatException if the roman segment does not satisfy roman numeral rules
+     * @throws InvalidInputFormatException if the roman segment does not satisfy roman numeric rules
      */
-    Integer convertRomanSegmentIntoNumericValue(String romanSegment) throws InvalidInputFormatException {
+    public Integer convertRomanSegmentIntoNumericValue(String romanSegment) throws InvalidInputFormatException {
 
         checkForValidRomanSegment(romanSegment);
         verifyRepetitionRulesOnTheSegment(romanSegment);
@@ -66,7 +67,7 @@ public class RomanNumericConverter {
 
     /**
      * Checks that the roman segment is not null, blank or empty
-     * @param romanSegment Roman numeral segment
+     * @param romanSegment Roman numeric segment
      * @throws InvalidInputFormatException  if the roman segment is null, blank or empty
      */
     private void checkForValidRomanSegment(String romanSegment) throws InvalidInputFormatException {
@@ -83,14 +84,14 @@ public class RomanNumericConverter {
     }
 
     /**
-     * Verifies the following rules of a valid roman numeral
+     * Verifies the following rules of a valid roman numeric
      *  <ul>
      *      <li>The symbols"D", "L", and "V" can never be repeated</li>
      *      <li>The symbols"I", "X", "C", and "M" can be repeated three times in succession, but no more</li>
      *      <li>They may appear four times if the third and fourth are separated by a smaller value</li>
      *  </ul>
-     * @param romanSegment Roman numeral Segment
-     * @throws InvalidInputFormatException if the roman numeral violates any of the rules of repetition
+     * @param romanSegment Roman numeric Segment
+     * @throws InvalidInputFormatException if the roman numeric violates any of the rules of repetition
      */
     private void verifyRepetitionRulesOnTheSegment(String romanSegment) throws InvalidInputFormatException {
         //"D", "L", and "V" can never be repeated.
@@ -118,7 +119,7 @@ public class RomanNumericConverter {
     }
 
     /**
-     * Verifies the following subtraction rules of a valid roman numeral
+     * Verifies the following subtraction rules of a valid roman numeric
      *  <ul>
      *      <li>"I" can be subtracted from "V" and "X" only.  </li>
      *      <li>"X" can be subtracted from "L" and "C" only.</li>
@@ -126,7 +127,7 @@ public class RomanNumericConverter {
      *      <li>"V", "L", and "D" can never be subtracted. </li>
      *  </ul>
      * @param romanSegment
-     * @throws InvalidInputFormatException if the roman numeral violates any of the rules of repetition
+     * @throws InvalidInputFormatException if the roman numeric violates any of the rules of repetition
      */
     private void verifySubtractionRulesOnTheSegment(String romanSegment) throws InvalidInputFormatException {
 
@@ -143,10 +144,10 @@ public class RomanNumericConverter {
      * Computes the numeric value from the roman letters and its numerical equivalent by applying the addition/subtraction rules.
      *
      * @param romanLettersFromTheSegment Roman segment split into roman characters
-     * @return numericEquivalent of the Roman numeral segment
+     * @return numericEquivalent of the Roman numeric segment
      */
     private Integer computeNumericValueOfARomanSegment(Character[] romanLettersFromTheSegment) {
-        //Init the sum to zero as there is no zero in roman numeral
+        //Init the sum to zero as there is no zero in roman numeric
         Integer numericValue = 0;
         RomanNumerals letterAtCurrentPos;
         RomanNumerals letterAtNextPos = Z;

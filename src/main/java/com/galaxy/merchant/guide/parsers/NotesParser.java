@@ -1,4 +1,4 @@
-package com.galaxy.merchant.guide;
+package com.galaxy.merchant.guide.parsers;
 
 import java.util.HashMap;
 import java.util.List;

@@ -1,7 +1,7 @@
 package com.galaxy.merchant.guide.constants;
 
 /**
- * This class
+ * Constants that are common across the app
  *
  * @author Gayathri Thiyagarajan
  */

@@ -1,4 +1,4 @@
-package com.galaxy.merchant.guide;
+package com.galaxy.merchant.guide.parsers;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -13,9 +13,9 @@ import org.junit.Test;
  *
  * @author Gayathri Thiyagarajan
  */
-public class AnInterGalacticUnitConversionNotesParser {
+public class AnInterGalacticNumeralNotesParser {
 
-    private InterGalacticUnitConversionNotesParser interGalacticUnitConversionNotesParser = new InterGalacticUnitConversionNotesParser();;
+    private InterGalacticNumeralNotesParser interGalacticNumeralNotesParser = new InterGalacticNumeralNotesParser();;
     private String[] linesFromNotes = {"glob is I", "prok is V","pish is X", "tegj is L"};
 
     @Test
@@ -23,7 +23,7 @@ public class AnInterGalacticUnitConversionNotesParser {
         //Given
 
         //When
-        HashMap<String, String> galacticUnitConversionMap = interGalacticUnitConversionNotesParser.parseNotes(Arrays.asList(linesFromNotes));
+        HashMap<String, String> galacticUnitConversionMap = interGalacticNumeralNotesParser.parseNotes(Arrays.asList(linesFromNotes));
 
         //Then
         assertNotNull(galacticUnitConversionMap);

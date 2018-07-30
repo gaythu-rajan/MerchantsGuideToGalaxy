@@ -1,4 +1,4 @@
-package com.galaxy.merchant.guide;
+package com.galaxy.merchant.guide.domain;
 
 import static java.util.Arrays.asList;
 import static org.junit.Assert.assertEquals;
@@ -13,18 +13,18 @@ import com.galaxy.merchant.guide.exceptions.NoInputProvidedException;
 import org.junit.Test;
 
 /**
- * Test for InterGalactic Decipherer
+ * Test for InterGalactic Interpreter
  *
  * @author Gayathri Thiyagarajan
  */
-public class AnInterGalacticDecipherer {
+public class AnInterGalacticInterpreter {
 
-    InterGalacticDecipherer interGalacticDecipherer = new InterGalacticDecipherer();
+    private InterGalacticInterpreter interGalacticInterpreter = new InterGalacticInterpreter();
 
     @Test
     public void canTakeAnInputOfLines() {
         //Given
-        InterGalacticDecipherer interGalacticDecipherer = new InterGalacticDecipherer();
+        InterGalacticInterpreter interGalacticInterpreter = new InterGalacticInterpreter();
         String[] linesOfText = {"glob is I",
                                 "prok is V",
                                 "pish is X",
@@ -41,25 +41,25 @@ public class AnInterGalacticDecipherer {
 
         //when     //then
         try {
-            interGalacticDecipherer.decipher(linesOfText);
+            interGalacticInterpreter.interpret(linesOfText);
         } catch (Exception e) {
             fail("It should have worked!");
         }
     }
 
     @Test
-    public void cannotDecipherWhenThereAreNoLinesOfNotes() {
+    public void cannotInterpretWhenThereAreNoLinesOfNotes() {
         //Given
         String[] linesOfText = {};
 
         //when
         try {
-            interGalacticDecipherer.decipher(linesOfText);
+            interGalacticInterpreter.interpret(linesOfText);
 
             //then
             fail("It should have thrown exception!");
         } catch (NoInputProvidedException e) {
-            assertEquals("No inputs provided to decipher", e.getErrorMessage());
+            assertEquals("No inputs provided to interpret", e.getErrorMessage());
         } catch (InvalidInputFormatException e) {
             fail("Not expecting this exception");
         }
@@ -67,7 +67,7 @@ public class AnInterGalacticDecipherer {
     }
 
     @Test
-    public void cannotDecipherWhenThereAreNoUnitConversionNotes() {
+    public void cannotInterpretWhenThereAreNoUnitConversionNotes() {
         //Given
         String[] linesOfText = {"glob glob Silver is 34 Credits",
                                 "glob prok Gold is 57800 Credits",
@@ -80,7 +80,7 @@ public class AnInterGalacticDecipherer {
 
         //when
         try {
-            interGalacticDecipherer.decipher(linesOfText);
+            interGalacticInterpreter.interpret(linesOfText);
 
             //then
             fail("It should have thrown exception!");
@@ -93,7 +93,7 @@ public class AnInterGalacticDecipherer {
     }
 
     @Test
-    public void cannotDecipherWhenThereAreNoTransactionNotes() {
+    public void cannotInterpretWhenThereAreNoTransactionNotes() {
         //Given
         String[] linesOfText = {"glob is I",
                                 "prok is V",
@@ -105,7 +105,7 @@ public class AnInterGalacticDecipherer {
 
         //when
         try {
-            interGalacticDecipherer.decipher(linesOfText);
+            interGalacticInterpreter.interpret(linesOfText);
 
             //then
             fail("It should have thrown exception!");
@@ -136,17 +136,17 @@ public class AnInterGalacticDecipherer {
 
         //when
         try {
-            interGalacticDecipherer.decipher(linesOfText);
+            interGalacticInterpreter.interpret(linesOfText);
 
             //then
-            assertNotNull(interGalacticDecipherer.getInterGalacticConversionUnits());
+            assertNotNull(interGalacticInterpreter.getInterGalacticConversionUnits());
 
-            assertEquals(4, interGalacticDecipherer.getInterGalacticConversionUnits().size());
+            assertEquals(4, interGalacticInterpreter.getInterGalacticConversionUnits().size());
 
-            assertEquals("I", interGalacticDecipherer.getInterGalacticConversionUnits().get("glob"));
-            assertEquals("V", interGalacticDecipherer.getInterGalacticConversionUnits().get("prok"));
-            assertEquals("X", interGalacticDecipherer.getInterGalacticConversionUnits().get("pish"));
-            assertEquals("L", interGalacticDecipherer.getInterGalacticConversionUnits().get("tegj"));
+            assertEquals("I", interGalacticInterpreter.getInterGalacticConversionUnits().get("glob"));
+            assertEquals("V", interGalacticInterpreter.getInterGalacticConversionUnits().get("prok"));
+            assertEquals("X", interGalacticInterpreter.getInterGalacticConversionUnits().get("pish"));
+            assertEquals("L", interGalacticInterpreter.getInterGalacticConversionUnits().get("tegj"));
 
         } catch (Exception e) {
             fail("It should have worked!");
@@ -172,16 +172,16 @@ public class AnInterGalacticDecipherer {
 
         //when
         try {
-            interGalacticDecipherer.decipher(linesOfText);
+            interGalacticInterpreter.interpret(linesOfText);
 
             //then
-            assertNotNull(interGalacticDecipherer.getCreditsPerEarthMaterial());
+            assertNotNull(interGalacticInterpreter.getCreditsPerEarthMaterial());
 
-            assertEquals(3, interGalacticDecipherer.getCreditsPerEarthMaterial().size());
+            assertEquals(3, interGalacticInterpreter.getCreditsPerEarthMaterial().size());
 
-            assertEquals(Double.valueOf(17), interGalacticDecipherer.getCreditsPerEarthMaterial().get("silver"));
-            assertEquals(Double.valueOf(14450), interGalacticDecipherer.getCreditsPerEarthMaterial().get("gold"));
-            assertEquals(Double.valueOf(195.5), interGalacticDecipherer.getCreditsPerEarthMaterial().get("iron"));
+            assertEquals(Double.valueOf(17), interGalacticInterpreter.getCreditsPerEarthMaterial().get("silver"));
+            assertEquals(Double.valueOf(14450), interGalacticInterpreter.getCreditsPerEarthMaterial().get("gold"));
+            assertEquals(Double.valueOf(195.5), interGalacticInterpreter.getCreditsPerEarthMaterial().get("iron"));
 
         } catch (Exception e) {
             fail("It should have worked!");
@@ -206,11 +206,9 @@ public class AnInterGalacticDecipherer {
 
         //when
         try {
-            interGalacticDecipherer.decipher(linesOfText);
+            HashMap<String, String> QAndA = interGalacticInterpreter.interpret(linesOfText);
 
             //then
-            HashMap<String, String> QAndA = interGalacticDecipherer.getQueriesAndTheirAnswers();
-
             assertNotNull(QAndA);
 
             assertEquals(4, QAndA.size());
@@ -243,11 +241,9 @@ public class AnInterGalacticDecipherer {
 
         //when
         try {
-            interGalacticDecipherer.decipher(linesOfText);
+            HashMap<String, String> QAndA = interGalacticInterpreter.interpret(linesOfText);
 
             //then
-            HashMap<String, String> QAndA = interGalacticDecipherer.getQueriesAndTheirAnswers();
-
             assertNotNull(QAndA);
 
             assertEquals(4, QAndA.size());
@@ -281,11 +277,9 @@ public class AnInterGalacticDecipherer {
 
         //when
         try {
-            interGalacticDecipherer.decipher(linesOfText);
+            HashMap<String, String> QAndA  = interGalacticInterpreter.interpret(linesOfText);
 
             //then
-            HashMap<String, String> QAndA = interGalacticDecipherer.getQueriesAndTheirAnswers();
-
             assertNotNull(QAndA);
 
             assertEquals(5, QAndA.size());
@@ -320,11 +314,9 @@ public class AnInterGalacticDecipherer {
 
         //when
         try {
-            interGalacticDecipherer.decipher(linesOfText);
+            HashMap<String, String> QAndA = interGalacticInterpreter.interpret(linesOfText);
 
             //then
-            HashMap<String, String> QAndA = interGalacticDecipherer.getQueriesAndTheirAnswers();
-
             assertNotNull(QAndA);
 
             assertEquals(5, QAndA.size());
@@ -359,11 +351,11 @@ public class AnInterGalacticDecipherer {
 
         //when
         try {
-            interGalacticDecipherer.decipher(linesOfText);
+            interGalacticInterpreter.interpret(linesOfText);
 
             //then
-            assertNotNull(interGalacticDecipherer.getBucketOfNotesOnInterGalacticConversionUnits());
-            assertEquals(4, interGalacticDecipherer.getBucketOfNotesOnInterGalacticConversionUnits().size());
+            assertNotNull(interGalacticInterpreter.getBucketOfNotesOnInterGalacticConversionUnits());
+            assertEquals(4, interGalacticInterpreter.getBucketOfNotesOnInterGalacticConversionUnits().size());
 
             assertEquals(true, asList(linesOfText).contains("glob is I"));
             assertEquals(true, asList(linesOfText).contains("prok is V"));
@@ -393,11 +385,11 @@ public class AnInterGalacticDecipherer {
 
         //when
         try {
-            interGalacticDecipherer.decipher(linesOfText);
+            interGalacticInterpreter.interpret(linesOfText);
 
             //then
-            assertNotNull(interGalacticDecipherer.getBucketOfNotesOnTransactions());
-            assertEquals(3, interGalacticDecipherer.getBucketOfNotesOnTransactions().size());
+            assertNotNull(interGalacticInterpreter.getBucketOfNotesOnTransactions());
+            assertEquals(3, interGalacticInterpreter.getBucketOfNotesOnTransactions().size());
 
             assertEquals(true, asList(linesOfText).contains("glob glob Silver is 34 Credits"));
             assertEquals(true, asList(linesOfText).contains("glob prok Gold is 57800 Credits"));
@@ -424,11 +416,11 @@ public class AnInterGalacticDecipherer {
 
         //when
         try {
-            interGalacticDecipherer.decipher(linesOfText);
+            interGalacticInterpreter.interpret(linesOfText);
 
             //then
-            assertNotNull(interGalacticDecipherer.getBucketOfQueries());
-            assertEquals(2, interGalacticDecipherer.getBucketOfQueries().size());
+            assertNotNull(interGalacticInterpreter.getBucketOfQueries());
+            assertEquals(2, interGalacticInterpreter.getBucketOfQueries().size());
 
             assertEquals(true, asList(linesOfText).contains("how much is pish tegj glob glob ?"));
             assertEquals(true, asList(linesOfText).contains("how much wood could a woodchuck chuck if a woodchuck could chuck wood ?"));
@@ -455,11 +447,11 @@ public class AnInterGalacticDecipherer {
 
         //when
         try {
-            interGalacticDecipherer.decipher(linesOfText);
+            interGalacticInterpreter.interpret(linesOfText);
 
             //then
-            assertNotNull(interGalacticDecipherer.getBucketOfQueries());
-            assertEquals(3, interGalacticDecipherer.getBucketOfQueries().size());
+            assertNotNull(interGalacticInterpreter.getBucketOfQueries());
+            assertEquals(3, interGalacticInterpreter.getBucketOfQueries().size());
 
             assertEquals(true, asList(linesOfText).contains("how many Credits is glob prok Silver ?"));
             assertEquals(true, asList(linesOfText).contains("how many Credits is glob prok Gold ?"));
@@ -488,11 +480,11 @@ public class AnInterGalacticDecipherer {
 
         //when
         try {
-            interGalacticDecipherer.decipher(linesOfText);
+            interGalacticInterpreter.interpret(linesOfText);
 
             //then
-            assertNotNull(interGalacticDecipherer.getBucketOfQueries());
-            assertEquals(5, interGalacticDecipherer.getBucketOfQueries().size());
+            assertNotNull(interGalacticInterpreter.getBucketOfQueries());
+            assertEquals(5, interGalacticInterpreter.getBucketOfQueries().size());
 
             assertEquals(true, asList(linesOfText).contains("how much is pish tegj glob glob ?"));
             assertEquals(true, asList(linesOfText).contains("how much wood could a woodchuck chuck if a woodchuck could chuck wood ?"));
@@ -524,12 +516,12 @@ public class AnInterGalacticDecipherer {
 
         //when
         try {
-            interGalacticDecipherer.decipher(linesOfText);
+            interGalacticInterpreter.interpret(linesOfText);
 
             //then
-            assertEquals(linesOfText.length, interGalacticDecipherer.getBucketOfNotesOnInterGalacticConversionUnits().size()
-                                        +  interGalacticDecipherer.getBucketOfNotesOnTransactions().size()
-                                        +  interGalacticDecipherer.getBucketOfQueries().size());
+            assertEquals(linesOfText.length, interGalacticInterpreter.getBucketOfNotesOnInterGalacticConversionUnits().size()
+                                        +  interGalacticInterpreter.getBucketOfNotesOnTransactions().size()
+                                        +  interGalacticInterpreter.getBucketOfQueries().size());
 
         } catch (Exception e) {
             fail("It should have worked!");

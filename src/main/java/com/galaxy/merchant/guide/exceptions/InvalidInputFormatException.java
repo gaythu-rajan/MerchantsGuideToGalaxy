@@ -7,7 +7,7 @@ package com.galaxy.merchant.guide.exceptions;
  */
 public class InvalidInputFormatException extends Exception {
 
-    String errorMessage;
+    private String errorMessage;
 
     public InvalidInputFormatException(String errorMessage) {
         this.errorMessage = errorMessage;
