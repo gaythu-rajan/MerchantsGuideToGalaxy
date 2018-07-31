@@ -22,10 +22,9 @@ There are two converters
 QueryResponder using these conversion factors calculates and constructs the answers.
 The answers correspond to each query in the order that they were asked.
 
-...If the app cannot comprehend the inputs or extract conversion factors,
-it responds with a single default answer "I have no idea what you are talking about".
-...If the app cannot understand one or more questions from a list of valid questions,
-it responds with default answer for each of the invalid query and valid answer for the rest.
+If the app cannot comprehend the inputs or extract conversion factors, it responds with a single default answer "I have no idea what you are talking about".
+
+If the app cannot understand one or more questions from a list of valid questions, it responds with default answer for each of the invalid query and valid answer for the rest.
 
  # Assumptions
 
