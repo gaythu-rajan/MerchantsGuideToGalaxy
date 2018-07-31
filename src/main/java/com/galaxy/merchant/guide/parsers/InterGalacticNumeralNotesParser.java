@@ -13,16 +13,19 @@ import org.apache.commons.lang3.StringUtils;
  */
 public class InterGalacticNumeralNotesParser implements NotesParser {
 
-    public HashMap<String, String> parseNotes(List<String> galacticUnitLinesFromNotes) {
+    private HashMap<String, String> interGalacticToRomanConversionMap = new HashMap<>();
 
-        HashMap<String, String> interGalacticConversionUnits = new HashMap<>();
+    public void parseNotes(List<String> galacticUnitLinesFromNotes) {
 
         for (String line : galacticUnitLinesFromNotes) {
             String[] wordsInALine = line.split(StringUtils.SPACE);
             String galacticUnit = wordsInALine[0];
             String romanNumericEquiv = wordsInALine[2];
-            interGalacticConversionUnits.put(galacticUnit.toLowerCase(), romanNumericEquiv);
+            interGalacticToRomanConversionMap.put(galacticUnit.toLowerCase(), romanNumericEquiv);
         }
-        return interGalacticConversionUnits;
+    }
+
+    public HashMap<String, String> getInterGalacticToRomanConversionMap() {
+        return interGalacticToRomanConversionMap;
     }
 }

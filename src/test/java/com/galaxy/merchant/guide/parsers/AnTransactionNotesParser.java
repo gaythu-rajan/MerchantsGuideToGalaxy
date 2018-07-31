@@ -7,7 +7,6 @@ import static org.junit.Assert.assertNotNull;
 import java.util.HashMap;
 
 import com.galaxy.merchant.guide.exceptions.InvalidInputFormatException;
-import com.galaxy.merchant.guide.parsers.TransactionNotesParser;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -30,6 +29,7 @@ public class AnTransactionNotesParser {
         interGalacticUnitsFromInput.put("prok", "V");
         interGalacticUnitsFromInput.put("pish", "X");
         interGalacticUnitsFromInput.put("tegj", "L");
+
         transactionNotesParser = new TransactionNotesParser(interGalacticUnitsFromInput);
     }
 
@@ -38,9 +38,11 @@ public class AnTransactionNotesParser {
         //Given
 
         //When
-        HashMap<String, Double> transactionMap = transactionNotesParser.parseNotes(asList(earthMaterialTransactions));
+        transactionNotesParser.parseNotes(asList(earthMaterialTransactions));
 
         //Then
+        HashMap<String, Double> transactionMap = transactionNotesParser.getCreditsPerEarthMaterial();
+
         assertNotNull(transactionMap);
         assertEquals(3, transactionMap.size());
     }
@@ -52,7 +54,10 @@ public class AnTransactionNotesParser {
                 , "Hello world"};
 
         //When
-        HashMap<String, Double> transactionMap = transactionNotesParser.parseNotes(asList(earthMaterialTransactions));
+        transactionNotesParser.parseNotes(asList(earthMaterialTransactions));
+
+        //Then
+        HashMap<String, Double> transactionMap = transactionNotesParser.getCreditsPerEarthMaterial();
 
         //Then
         assertNotNull(transactionMap);
@@ -64,7 +69,10 @@ public class AnTransactionNotesParser {
         //Given
 
         //When
-        HashMap<String, Double> transactionMap = transactionNotesParser.parseNotes(asList(earthMaterialTransactions));
+        transactionNotesParser.parseNotes(asList(earthMaterialTransactions));
+
+        //Then
+        HashMap<String, Double> transactionMap = transactionNotesParser.getCreditsPerEarthMaterial();
 
         //Then
 

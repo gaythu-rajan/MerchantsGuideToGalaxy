@@ -23,9 +23,11 @@ public class AnInterGalacticNumeralNotesParser {
         //Given
 
         //When
-        HashMap<String, String> galacticUnitConversionMap = interGalacticNumeralNotesParser.parseNotes(Arrays.asList(linesFromNotes));
+        interGalacticNumeralNotesParser.parseNotes(Arrays.asList(linesFromNotes));
 
         //Then
+        HashMap<String, String> galacticUnitConversionMap = interGalacticNumeralNotesParser.getInterGalacticToRomanConversionMap();
+
         assertNotNull(galacticUnitConversionMap);
         assertEquals(4, galacticUnitConversionMap.size());
 

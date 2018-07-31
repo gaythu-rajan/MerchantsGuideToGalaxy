@@ -182,7 +182,7 @@ public class AnInterGalacticApp {
         InterGalacticApp.main(args);
 
         //then
-        assertEquals("No notes with conversion units found; cannot proceed further", trim(errContent.toString()));
+        assertEquals("No notes with conversion mapping found; cannot proceed further", trim(errContent.toString()));
 
         assertTrue(isEmpty(outContent.toString()));
     }

@@ -5,11 +5,14 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.fail;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import com.galaxy.merchant.guide.constants.InterGalacticAppConstants;
 import com.galaxy.merchant.guide.exceptions.InvalidInputFormatException;
 import com.galaxy.merchant.guide.exceptions.NoInputProvidedException;
+import org.junit.Before;
 import org.junit.Test;
 
 /**
@@ -20,24 +23,52 @@ import org.junit.Test;
 public class AnInterGalacticInterpreter {
 
     private InterGalacticInterpreter interGalacticInterpreter = new InterGalacticInterpreter();
+    private HashMap<String, String> interGalacticToRomanConversionMap = new HashMap<>();
+    private HashMap<String, Double> creditsPerEarthMaterial = new HashMap<>();
+    private List<String> bucketOfNotesOnTransactions = new ArrayList<>();
+    private List<String> bucketOfNotesOnInterGalacticNumerals = new ArrayList<>();
+    private String[] linesOfText = {"glob is I",
+                                    "prok is V",
+                                    "pish is X",
+                                    "tegj is L",
+                                    "glob glob Silver is 34 Credits",
+                                    "glob prok Gold is 57800 Credits",
+                                    "pish pish Iron is 3910 Credits",
+                                    "how much is pish tegj glob glob ?",
+                                    "how many Credits is glob prok Silver ?",
+                                    "how many Credits is glob prok Gold ?",
+                                    "how many Credits is glob prok Iron ?",
+                                    "how much wood could a woodchuck chuck if a woodchuck could chuck wood ?"
+    };
+
+
+    @Before
+    public void initialiseEntities() {
+
+        bucketOfNotesOnInterGalacticNumerals.add("glob is I");
+        bucketOfNotesOnInterGalacticNumerals.add("prok is V");
+        bucketOfNotesOnInterGalacticNumerals.add("pish is X");
+        bucketOfNotesOnInterGalacticNumerals.add("tegj is L");
+
+        interGalacticToRomanConversionMap.put("glob", "I");
+        interGalacticToRomanConversionMap.put("prok", "V");
+        interGalacticToRomanConversionMap.put("pish", "X");
+        interGalacticToRomanConversionMap.put("tegj", "L");
+
+        bucketOfNotesOnTransactions.add("glob glob Silver is 34 credits");
+        bucketOfNotesOnTransactions.add("glob prok Gold is 57800 credits");
+        bucketOfNotesOnTransactions.add("pish pish Iron is 3910 credits");
+
+        creditsPerEarthMaterial.put("silver", 17d);
+        creditsPerEarthMaterial.put("gold", 14450d);
+        creditsPerEarthMaterial.put("iron", 195.5d);
+
+
+    }
 
     @Test
     public void canTakeAnInputOfLines() {
-        //Given
-        InterGalacticInterpreter interGalacticInterpreter = new InterGalacticInterpreter();
-        String[] linesOfText = {"glob is I",
-                                "prok is V",
-                                "pish is X",
-                                "tegj is L",
-                                "glob glob Silver is 34 Credits",
-                                "glob prok Gold is 57800 Credits",
-                                "pish pish Iron is 3910 Credits",
-                                "how much is pish tegj glob glob ?",
-                                "how many Credits is glob prok Silver ?",
-                                "how many Credits is glob prok Gold ?",
-                                "how many Credits is glob prok Iron ?",
-                                "how much wood could a woodchuck chuck if a woodchuck could chuck wood ?"
-                                };
+        //Given: An InterGalacticInterpreter instance
 
         //when     //then
         try {
@@ -85,7 +116,7 @@ public class AnInterGalacticInterpreter {
             //then
             fail("It should have thrown exception!");
         } catch (NoInputProvidedException e) {
-            assertEquals("No notes with conversion units found; cannot proceed further", e.getErrorMessage());
+            assertEquals("No notes with conversion mapping found; cannot proceed further", e.getErrorMessage());
         } catch (InvalidInputFormatException e) {
             fail("Not expecting this exception");
         }
@@ -119,34 +150,23 @@ public class AnInterGalacticInterpreter {
 
     @Test
     public void computesInterGalacticUnitConversionMapFromNotes() {
-        //Given
-        String[] linesOfText = {"glob is I",
-                                "prok is V",
-                                "pish is X",
-                                "tegj is L",
-                                "glob glob Silver is 34 Credits",
-                                "glob prok Gold is 57800 Credits",
-                                "pish pish Iron is 3910 Credits",
-                                "how much is pish tegj glob glob ?",
-                                "how many Credits is glob prok Silver ?",
-                                "how many Credits is glob prok Gold ?",
-                                "how many Credits is glob prok Iron ?",
-                                "how much wood could a woodchuck chuck if a woodchuck could chuck wood ?"
-                                };
+        //Given: NotesOnInterGalacticNumerals
 
         //when
         try {
-            interGalacticInterpreter.interpret(linesOfText);
+            interGalacticInterpreter.interpretInterGalacticToRomanConversionMap(bucketOfNotesOnInterGalacticNumerals);
+            HashMap<String, String> expectedInterGalacticToRomanConversionMap
+                    = interGalacticInterpreter.getInterGalacticToRomanConversionMap();
 
             //then
-            assertNotNull(interGalacticInterpreter.getInterGalacticConversionUnits());
+            assertNotNull(expectedInterGalacticToRomanConversionMap);
 
-            assertEquals(4, interGalacticInterpreter.getInterGalacticConversionUnits().size());
+            assertEquals(4, expectedInterGalacticToRomanConversionMap.size());
 
-            assertEquals("I", interGalacticInterpreter.getInterGalacticConversionUnits().get("glob"));
-            assertEquals("V", interGalacticInterpreter.getInterGalacticConversionUnits().get("prok"));
-            assertEquals("X", interGalacticInterpreter.getInterGalacticConversionUnits().get("pish"));
-            assertEquals("L", interGalacticInterpreter.getInterGalacticConversionUnits().get("tegj"));
+            assertEquals("I", expectedInterGalacticToRomanConversionMap.get("glob"));
+            assertEquals("V", expectedInterGalacticToRomanConversionMap.get("prok"));
+            assertEquals("X", expectedInterGalacticToRomanConversionMap.get("pish"));
+            assertEquals("L", expectedInterGalacticToRomanConversionMap.get("tegj"));
 
         } catch (Exception e) {
             fail("It should have worked!");
@@ -155,33 +175,22 @@ public class AnInterGalacticInterpreter {
 
     @Test
     public void computesEarthMaterialCreditsBasedTransactionsFromNotes() {
-        //Given
-        String[] linesOfText = {"glob is I",
-                                "prok is V",
-                                "pish is X",
-                                "tegj is L",
-                                "glob glob Silver is 34 Credits",
-                                "glob prok Gold is 57800 Credits",
-                                "pish pish Iron is 3910 Credits",
-                                "how much is pish tegj glob glob ?",
-                                "how many Credits is glob prok Silver ?",
-                                "how many Credits is glob prok Gold ?",
-                                "how many Credits is glob prok Iron ?",
-                                "how much wood could a woodchuck chuck if a woodchuck could chuck wood ?"
-                                };
+        //Given interGalacticToRomanConversionMap & NotesOnTransactions
 
         //when
         try {
-            interGalacticInterpreter.interpret(linesOfText);
+            interGalacticInterpreter.interpretNumberOfCreditsPerEarthMaterial(interGalacticToRomanConversionMap, bucketOfNotesOnTransactions);
 
+            HashMap<String, Double> expectedCreditsPerEarthMaterial
+                    = interGalacticInterpreter.getCreditsPerEarthMaterial();
             //then
-            assertNotNull(interGalacticInterpreter.getCreditsPerEarthMaterial());
+            assertNotNull(expectedCreditsPerEarthMaterial);
 
-            assertEquals(3, interGalacticInterpreter.getCreditsPerEarthMaterial().size());
+            assertEquals(3, expectedCreditsPerEarthMaterial.size());
 
-            assertEquals(Double.valueOf(17), interGalacticInterpreter.getCreditsPerEarthMaterial().get("silver"));
-            assertEquals(Double.valueOf(14450), interGalacticInterpreter.getCreditsPerEarthMaterial().get("gold"));
-            assertEquals(Double.valueOf(195.5), interGalacticInterpreter.getCreditsPerEarthMaterial().get("iron"));
+            assertEquals(Double.valueOf(17), expectedCreditsPerEarthMaterial.get("Silver"));
+            assertEquals(Double.valueOf(14450), expectedCreditsPerEarthMaterial.get("Gold"));
+            assertEquals(Double.valueOf(195.5), expectedCreditsPerEarthMaterial.get("Iron"));
 
         } catch (Exception e) {
             fail("It should have worked!");
@@ -260,20 +269,7 @@ public class AnInterGalacticInterpreter {
 
     @Test
     public void fullMontyInput() {
-        //Given
-        String[] linesOfText = {"glob is I",
-                "prok is V",
-                "pish is X",
-                "tegj is L",
-                "glob glob Silver is 34 Credits",
-                "glob prok Gold is 57800 Credits",
-                "pish pish Iron is 3910 Credits",
-                "how much is pish tegj glob glob ?",
-                "how many Credits is glob prok Silver ?",
-                "how many Credits is glob prok Gold ?",
-                "how many Credits is glob prok Iron ?",
-                "how much wood could a woodchuck chuck if a woodchuck could chuck wood ?"
-        };
+        //Given linesOfText
 
         //when
         try {
@@ -334,28 +330,15 @@ public class AnInterGalacticInterpreter {
 
     @Test
     public void putsInterGalacticUnitNotesIntoRightBucket() {
-        //Given
-        String[] linesOfText = {"glob is I",
-                                "prok is V",
-                                "pish is X",
-                                "tegj is L",
-                                "glob glob Silver is 34 Credits",
-                                "glob prok Gold is 57800 Credits",
-                                "pish pish Iron is 3910 Credits",
-                                "how much is pish tegj glob glob ?",
-                                "how many Credits is glob prok Silver ?",
-                                "how many Credits is glob prok Gold ?",
-                                "how many Credits is glob prok Iron ?",
-                                "how much wood could a woodchuck chuck if a woodchuck could chuck wood ?"
-                                };
+        //Given linesOfText
 
         //when
         try {
             interGalacticInterpreter.interpret(linesOfText);
 
             //then
-            assertNotNull(interGalacticInterpreter.getBucketOfNotesOnInterGalacticConversionUnits());
-            assertEquals(4, interGalacticInterpreter.getBucketOfNotesOnInterGalacticConversionUnits().size());
+            assertNotNull(interGalacticInterpreter.getBucketOfNotesOnInterGalacticNumerals());
+            assertEquals(4, interGalacticInterpreter.getBucketOfNotesOnInterGalacticNumerals().size());
 
             assertEquals(true, asList(linesOfText).contains("glob is I"));
             assertEquals(true, asList(linesOfText).contains("prok is V"));
@@ -367,120 +350,12 @@ public class AnInterGalacticInterpreter {
     }
 
     @Test
-    public void putsTransactionNotesIntoRightBucket() {
-        //Given
-        String[] linesOfText = {"glob is I",
-                                "prok is V",
-                                "pish is X",
-                                "tegj is L",
-                                "glob glob Silver is 34 Credits",
-                                "glob prok Gold is 57800 Credits",
-                                "pish pish Iron is 3910 Credits",
-                                "how much is pish tegj glob glob ?",
-                                "how many Credits is glob prok Silver ?",
-                                "how many Credits is glob prok Gold ?",
-                                "how many Credits is glob prok Iron ?",
-                                "how much wood could a woodchuck chuck if a woodchuck could chuck wood ?"
-                                };
-
-        //when
-        try {
-            interGalacticInterpreter.interpret(linesOfText);
-
-            //then
-            assertNotNull(interGalacticInterpreter.getBucketOfNotesOnTransactions());
-            assertEquals(3, interGalacticInterpreter.getBucketOfNotesOnTransactions().size());
-
-            assertEquals(true, asList(linesOfText).contains("glob glob Silver is 34 Credits"));
-            assertEquals(true, asList(linesOfText).contains("glob prok Gold is 57800 Credits"));
-            assertEquals(true, asList(linesOfText).contains("pish pish Iron is 3910 Credits"));
-
-        } catch (Exception e) {
-            fail("It should have worked!");
-        }
-    }
-
-    @Test
-    public void putsHowMuchQueriesIntoRightBucket() {
-        //Given
-        String[] linesOfText = {"glob is I",
-                                "prok is V",
-                                "pish is X",
-                                "tegj is L",
-                                "glob glob Silver is 34 Credits",
-                                "glob prok Gold is 57800 Credits",
-                                "pish pish Iron is 3910 Credits",
-                                "how much is pish tegj glob glob ?",
-                                "how much wood could a woodchuck chuck if a woodchuck could chuck wood ?"
-                                };
-
-        //when
-        try {
-            interGalacticInterpreter.interpret(linesOfText);
-
-            //then
-            assertNotNull(interGalacticInterpreter.getBucketOfQueries());
-            assertEquals(2, interGalacticInterpreter.getBucketOfQueries().size());
-
-            assertEquals(true, asList(linesOfText).contains("how much is pish tegj glob glob ?"));
-            assertEquals(true, asList(linesOfText).contains("how much wood could a woodchuck chuck if a woodchuck could chuck wood ?"));
-
-        } catch (Exception e) {
-            fail("It should have worked!");
-        }
-    }
-
-    @Test
-    public void putsHowManyQueriesIntoRightBucket() {
-        //Given
-        String[] linesOfText = {"glob is I",
-                                "prok is V",
-                                "pish is X",
-                                "tegj is L",
-                                "glob glob Silver is 34 Credits",
-                                "glob prok Gold is 57800 Credits",
-                                "pish pish Iron is 3910 Credits",
-                                "how many Credits is glob prok Silver ?",
-                                "how many Credits is glob prok Gold ?",
-                                "how many Credits is glob prok Iron ?",
-                                };
-
-        //when
-        try {
-            interGalacticInterpreter.interpret(linesOfText);
-
-            //then
-            assertNotNull(interGalacticInterpreter.getBucketOfQueries());
-            assertEquals(3, interGalacticInterpreter.getBucketOfQueries().size());
-
-            assertEquals(true, asList(linesOfText).contains("how many Credits is glob prok Silver ?"));
-            assertEquals(true, asList(linesOfText).contains("how many Credits is glob prok Gold ?"));
-            assertEquals(true, asList(linesOfText).contains("how many Credits is glob prok Iron ?"));
-        } catch (Exception e) {
-            fail("It should have worked!");
-        }
-    }
-
-    @Test
     public void putsAllQueriesIntoOneBucket() {
-        //Given
-        String[] linesOfText = {"glob is I",
-                                "prok is V",
-                                "pish is X",
-                                "tegj is L",
-                                "glob glob Silver is 34 Credits",
-                                "glob prok Gold is 57800 Credits",
-                                "pish pish Iron is 3910 Credits",
-                                "how much is pish tegj glob glob ?",
-                                "how many Credits is glob prok Silver ?",
-                                "how many Credits is glob prok Gold ?",
-                                "how many Credits is glob prok Iron ?",
-                                "how much wood could a woodchuck chuck if a woodchuck could chuck wood ?"
-                                };
+        //Given linesOfText
 
         //when
         try {
-            interGalacticInterpreter.interpret(linesOfText);
+            interGalacticInterpreter.classifyLinesOfTextFromNotes(linesOfText);
 
             //then
             assertNotNull(interGalacticInterpreter.getBucketOfQueries());
@@ -498,28 +373,14 @@ public class AnInterGalacticInterpreter {
 
     @Test
     public void hasParsedAllLinesIntoOneOfTheBuckets() {
-        //Given
-        String[] linesOfText = {
-                                "glob is I",
-                                "prok is V",
-                                "pish is X",
-                                "tegj is L",
-                                "glob glob Silver is 34 Credits",
-                                "glob prok Gold is 57800 Credits",
-                                "pish pish Iron is 3910 Credits",
-                                "how much is pish tegj glob glob ?",
-                                "how many Credits is glob prok Silver ?",
-                                "how many Credits is glob prok Gold ?",
-                                "how many Credits is glob prok Iron ?",
-                                "how much wood could a woodchuck chuck if a woodchuck could chuck wood ?"
-                                };
+        //Given linesOfText
 
         //when
         try {
-            interGalacticInterpreter.interpret(linesOfText);
+            interGalacticInterpreter.classifyLinesOfTextFromNotes(linesOfText);
 
             //then
-            assertEquals(linesOfText.length, interGalacticInterpreter.getBucketOfNotesOnInterGalacticConversionUnits().size()
+            assertEquals(linesOfText.length, interGalacticInterpreter.getBucketOfNotesOnInterGalacticNumerals().size()
                                         +  interGalacticInterpreter.getBucketOfNotesOnTransactions().size()
                                         +  interGalacticInterpreter.getBucketOfQueries().size());
 

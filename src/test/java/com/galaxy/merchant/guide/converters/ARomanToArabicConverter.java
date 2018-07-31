@@ -16,7 +16,8 @@ import org.junit.Test;
  */
 public class ARomanToArabicConverter {
 
-    RomanToArabicConverter romanToArabicConverter = new RomanToArabicConverter();
+    private RomanToArabicConverter romanToArabicConverter = new RomanToArabicConverter();
+
     @Test
     public void convertsRomanNumeralIntoNumericValueUsingSubtractionNotation() {
         //Given

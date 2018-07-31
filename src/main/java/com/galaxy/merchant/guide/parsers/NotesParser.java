@@ -1,6 +1,5 @@
 package com.galaxy.merchant.guide.parsers;
 
-import java.util.HashMap;
 import java.util.List;
 
 import com.galaxy.merchant.guide.exceptions.InvalidInputFormatException;
@@ -12,5 +11,5 @@ import com.galaxy.merchant.guide.exceptions.InvalidInputFormatException;
  */
 interface NotesParser {
 
-    HashMap<String, ?> parseNotes(List<String> linesFromNotes) throws InvalidInputFormatException;
+    void parseNotes(List<String> linesFromNotes) throws InvalidInputFormatException;
 }

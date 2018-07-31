@@ -44,8 +44,8 @@ public class AQueryResponder {
     public void successfullyInitialises() {
         queryResponder
                 = new QueryResponder.QueryResponderBuilder()
-                    .setInterGalacticUnits(interGalacticUnitsFromInput)
-                    .setEarthMaterialForSale(earthMaterialTransactionsFromInput).createQueryResponder();
+                    .setInterGalacticToRomanConversionMap(interGalacticUnitsFromInput)
+                    .setCreditsForEarthMaterials(earthMaterialTransactionsFromInput).createQueryResponder();
     }
 
     @Test
@@ -54,7 +54,43 @@ public class AQueryResponder {
                 .createQueryResponder();
 
         assertNotNull(queryResponder.getCreditsForEarthMaterials());
-        assertNotNull(queryResponder.getInterGalacticConversionUnits());
+        assertNotNull(queryResponder.getInterGalacticToRomanConversionMap());
+    }
+
+    @Test
+    public void calculatesNumericValue() {
+        //Given
+        String interGalacticQuantity = "pish tegj glob glob";
+
+        //verify
+        Integer expectedAnswer = 42;
+
+        //when
+        Integer answer = 0;
+        try {
+            answer = queryResponder.calculateNumericValue(interGalacticQuantity);
+        } catch (InvalidQueryException e) {
+            fail("Should not have thrown exception");
+        }
+        //then
+        assertEquals(expectedAnswer, answer);
+
+        //Given
+        interGalacticQuantity = "glob prok";
+
+        //verify
+        expectedAnswer = 4;
+
+        //when
+        answer = 0;
+
+        try {
+            answer = queryResponder.calculateNumericValue(interGalacticQuantity);
+        } catch (InvalidQueryException e) {
+            fail("Should not have thrown exception");
+        }
+        //then
+        assertEquals(expectedAnswer, answer);
     }
 
     @Test
@@ -68,7 +104,7 @@ public class AQueryResponder {
         //when
         String answer = null;
         try {
-            answer = queryResponder.answerQueryOnIntergalacticAmount(query);
+            answer = queryResponder.answerQueryOnInterGalacticQuantity(query);
         } catch (InvalidQueryException e) {
             fail("Should not have thrown exception");
         }
@@ -83,7 +119,7 @@ public class AQueryResponder {
 
         //when
         try {
-            answer = queryResponder.answerQueryOnIntergalacticAmount(query);
+            answer = queryResponder.answerQueryOnInterGalacticQuantity(query);
         } catch (InvalidQueryException e) {
             fail("Should not have thrown exception");
         }
@@ -99,7 +135,7 @@ public class AQueryResponder {
 
         //when
         try {
-            queryResponder.answerQueryOnIntergalacticAmount(query);
+            queryResponder.answerQueryOnInterGalacticQuantity(query);
             fail("Should have thrown exception");
         } catch (InvalidQueryException e) {
             assertEquals(InterGalacticAppConstants.DEFAULT_ANSWER, e.getErrorMessage());
@@ -113,7 +149,7 @@ public class AQueryResponder {
 
         //when
         try {
-            queryResponder.answerQueryOnIntergalacticAmount(query);
+            queryResponder.answerQueryOnInterGalacticQuantity(query);
             fail("Should have thrown exception");
         } catch (InvalidQueryException e) {
             assertEquals(InterGalacticAppConstants.DEFAULT_ANSWER, e.getErrorMessage());
@@ -127,7 +163,7 @@ public class AQueryResponder {
 
         //when
         try {
-            queryResponder.answerQueryOnIntergalacticAmount(query);
+            queryResponder.answerQueryOnInterGalacticQuantity(query);
             fail("Should have thrown exception");
         } catch (InvalidQueryException e) {
             assertEquals(InterGalacticAppConstants.DEFAULT_ANSWER, e.getErrorMessage());
@@ -138,7 +174,7 @@ public class AQueryResponder {
 
         //when
         try {
-            queryResponder.answerQueryOnIntergalacticAmount(query);
+            queryResponder.answerQueryOnInterGalacticQuantity(query);
             fail("Should have thrown exception");
         } catch (InvalidQueryException e) {
             assertEquals(InterGalacticAppConstants.DEFAULT_ANSWER, e.getErrorMessage());
@@ -149,11 +185,51 @@ public class AQueryResponder {
 
         //when
         try {
-            queryResponder.answerQueryOnIntergalacticAmount(query);
+            queryResponder.answerQueryOnInterGalacticQuantity(query);
             fail("Should have thrown exception");
         } catch (InvalidQueryException e) {
             assertEquals(InterGalacticAppConstants.DEFAULT_ANSWER, e.getErrorMessage());
         }
+    }
+
+    @Test
+    public void calculatesNumberOfCreditsOfATransaction() {
+        //Given
+        String transaction = "glob prok silver";
+
+        //verify
+        Integer expectedAnswer = 68;
+
+        //when
+        Integer answer = queryResponder.calculateNumberOfCredits(transaction);
+
+        //then
+        assertEquals(expectedAnswer, answer);
+
+        //Given
+        transaction = "glob prok gold";
+
+        //verify
+        expectedAnswer = 57800;
+
+        //when
+        answer = queryResponder.calculateNumberOfCredits(transaction);
+
+        //then
+        assertEquals(expectedAnswer, answer);
+
+        //Given
+        transaction = "glob prok iron";
+
+        //verify
+        expectedAnswer = 782;
+
+        //when
+        answer = queryResponder.calculateNumberOfCredits(transaction);
+
+        //then
+        assertEquals(expectedAnswer, answer);
+
     }
 
     @Test

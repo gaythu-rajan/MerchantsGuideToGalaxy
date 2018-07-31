@@ -18,20 +18,19 @@ import com.galaxy.merchant.guide.parsers.InterGalacticNumeralNotesParser;
 import com.galaxy.merchant.guide.parsers.TransactionNotesParser;
 
 /**
- * InterGalacticInterpreter interprets the lines of notes to extract the relevant conversion units
- * and turns queries into answers
- *
+ * InterGalacticInterpreter interprets the lines of notes to extract the relevant conversion map
+ * and interprets queries to answer them
  */
 public class InterGalacticInterpreter {
 
     private static final String HOW_MUCH_QUESTION_START = "how much";
     private static final String HOW_MANY_QUESTION_START = "how many";
 
-    private List<String> bucketOfNotesOnInterGalacticConversionUnits = new ArrayList<>();
+    private List<String> bucketOfNotesOnInterGalacticNumerals = new ArrayList<>();
     private List<String> bucketOfNotesOnTransactions = new ArrayList<>();
     private List<String> bucketOfQueries = new LinkedList<>();
 
-    private HashMap<String, String> interGalacticConversionUnits;
+    private HashMap<String, String> interGalacticToRomanConversionMap;
     private HashMap<String, Double> creditsPerEarthMaterial;
     private LinkedHashMap<String, String> queriesAndTheirAnswers = new LinkedHashMap<>();
 
@@ -42,23 +41,25 @@ public class InterGalacticInterpreter {
 
     /**
      * Interprets lines of text and answers queries in the line of text
+     *
      * @param linesOfText Lines of input text as read from the file
-     * @throws NoInputProvidedException when there are no notes to interpret from the file
-     * @throws InvalidInputFormatException from the conversion downstream if any of units
-     *                                      or transactions or queries don't conform to the pattern
+     * @throws NoInputProvidedException    when there are no notes to interpret from the file
+     * @throws InvalidInputFormatException from the conversion downstream if any of conversion map or
+     *                                     transactions or queries don't conform to the pattern
      */
     public HashMap<String, String> interpret(String[] linesOfText) throws NoInputProvidedException, InvalidInputFormatException {
 
-        if(linesOfText.length == 0) {
+
+        if (linesOfText.length == 0) {
             throw new NoInputProvidedException("No inputs provided to interpret");
         }
 
         // Parse each line and put it in respective buckets
-        parseLinesOfTextFromNotes(linesOfText);
+        classifyLinesOfTextFromNotes(linesOfText);
 
-        //Without conversion units we cannot proceed
-        if (bucketOfNotesOnInterGalacticConversionUnits.size() == 0) {
-            throw new NoInputProvidedException("No notes with conversion units found; cannot proceed further");
+        //Without conversion map we cannot proceed
+        if (bucketOfNotesOnInterGalacticNumerals.size() == 0) {
+            throw new NoInputProvidedException("No notes with conversion mapping found; cannot proceed further");
         }
 
         //Without previous transaction notes we cannot calculate the credits per material
@@ -66,34 +67,92 @@ public class InterGalacticInterpreter {
             throw new NoInputProvidedException("No notes with previous transactions found; cannot proceed further");
         }
 
-        // parse the galactic units conversion bucket and get the galactic conversion units e.g. Glob = I
+        interpretInterGalacticToRomanConversionMap(bucketOfNotesOnInterGalacticNumerals);
+        interpretNumberOfCreditsPerEarthMaterial(interGalacticToRomanConversionMap, bucketOfNotesOnTransactions);
+        interpretAnswersToQueries(bucketOfQueries, interGalacticToRomanConversionMap, creditsPerEarthMaterial);
+
+        return queriesAndTheirAnswers;
+    }
+
+    /**
+     * Parses lines of notes and puts them in respective buckets
+     *
+     * @param linesOfText Input Lines of text
+     */
+    void classifyLinesOfTextFromNotes(String[] linesOfText) {
+
+        bucketOfNotesOnInterGalacticNumerals = stream(linesOfText)
+                .filter(lineOfText -> lineOfText.matches(INTER_GALACTIC_UNIT_NOTES_PATTERN))
+                .collect(Collectors.toList());
+
+        bucketOfNotesOnTransactions = stream(linesOfText)
+                .filter(lineOfText -> lineOfText.matches(TRANSACTION_NOTES_PATTERN))
+                .map(String::toLowerCase)
+                .collect(Collectors.toList());
+
+        bucketOfQueries = stream(linesOfText)
+                .filter(lineOfText -> lineOfText.matches(QUERY_PATTERN))
+                .collect(Collectors.toList());
+    }
+
+    /**
+     * Parse the galactic conversion notes bucket and get the galactic to roman conversion map e.g. Glob = I
+     */
+    void interpretInterGalacticToRomanConversionMap(List<String> bucketOfNotesOnInterGalacticNumerals) {
+
         InterGalacticNumeralNotesParser interGalacticNumeralNotesParser = new InterGalacticNumeralNotesParser();
-        interGalacticConversionUnits = interGalacticNumeralNotesParser.parseNotes(bucketOfNotesOnInterGalacticConversionUnits);
+        interGalacticNumeralNotesParser.parseNotes(bucketOfNotesOnInterGalacticNumerals);
+        this.interGalacticToRomanConversionMap = interGalacticNumeralNotesParser.getInterGalacticToRomanConversionMap();
 
-        // parse the earth transaction bucket and get the number of credits per Earth Material (value stored as double but rounded off later)
-        //e.g Silver=17 (credits)
-        TransactionNotesParser transactionNotesParser = new TransactionNotesParser(interGalacticConversionUnits);
-        creditsPerEarthMaterial = transactionNotesParser.parseNotes(bucketOfNotesOnTransactions);
+    }
 
-        //Assumption - Format of query - "how much ..." for query on Intergalactic Amount & "how many .." for transactional queries
-        //Parse the query bucket, calculate and frame the answer for each query e.g. how much is pish tegj glob glob ? = pish tegj glob glob is 42
-        //Any exceptions in parsing is treated as invalid query and queries of different format than assumed is treated as invalid query as well
-        if(creditsPerEarthMaterial.size() != 0) {
+
+    /**
+     * Parse the earth transaction bucket and get the number of credits per Earth Material (value stored as double but rounded off later)
+     e.g Silver=17 (credits)
+     *
+     * @param interGalacticToRomanConversionMap Conversion factors
+     * @param bucketOfNotesOnTransactions collection of transaction notes
+     */
+    void interpretNumberOfCreditsPerEarthMaterial(HashMap<String, String> interGalacticToRomanConversionMap,
+                                                  List<String> bucketOfNotesOnTransactions)
+            throws InvalidInputFormatException {
+        TransactionNotesParser transactionNotesParser = new TransactionNotesParser(interGalacticToRomanConversionMap);
+        transactionNotesParser.parseNotes(bucketOfNotesOnTransactions);
+        this.creditsPerEarthMaterial = transactionNotesParser.getCreditsPerEarthMaterial();
+    }
+
+    /**
+     * Assumption - Format of query - "how much ..." for query on Intergalactic Amount & "how many .." for transactional queries
+     * Parse the query bucket, calculate and frame the answer for each query e.g. how much is pish tegj glob glob ? = pish tegj glob glob is 42
+     * Any exceptions in parsing is treated as invalid query and queries of different format than assumed is treated as invalid query as well
+     *
+     * @param bucketOfQueries collection of queries
+     * @param interGalacticToRomanConversionMap Conversion factors
+     * @param creditsPerEarthMaterial Number of credits per quantity of earth material
+     */
+    private void interpretAnswersToQueries(List<String> bucketOfQueries,
+                                                                    HashMap<String, String> interGalacticToRomanConversionMap,
+                                                                    HashMap<String, Double> creditsPerEarthMaterial) {
+
+        LinkedHashMap<String, String> queriesAndTheirAnswers = new LinkedHashMap<>();
+
+        if (creditsPerEarthMaterial.size() != 0) {
             QueryResponder queryResponder = new QueryResponder.QueryResponderBuilder()
-                    .setEarthMaterialForSale(creditsPerEarthMaterial)
-                    .setInterGalacticUnits(interGalacticConversionUnits).createQueryResponder();
+                    .setCreditsForEarthMaterials(creditsPerEarthMaterial)
+                    .setInterGalacticToRomanConversionMap(interGalacticToRomanConversionMap).createQueryResponder();
 
             String answerToQuery;
-            for(String query : bucketOfQueries) {
-                if(query.toLowerCase().startsWith(HOW_MUCH_QUESTION_START)) {
+            for (String query : bucketOfQueries) {
+                if (query.toLowerCase().startsWith(HOW_MUCH_QUESTION_START)) {
                     try {
-                        answerToQuery = queryResponder.answerQueryOnIntergalacticAmount(query.toLowerCase());
+                        answerToQuery = queryResponder.answerQueryOnInterGalacticQuantity(query.toLowerCase());
                     } catch (InvalidQueryException e) {
                         answerToQuery = e.getErrorMessage();
                     }
                     queriesAndTheirAnswers.put(query, answerToQuery);
                 }
-                if(query.toLowerCase().startsWith(HOW_MANY_QUESTION_START)) {
+                if (query.toLowerCase().startsWith(HOW_MANY_QUESTION_START)) {
                     try {
                         answerToQuery = queryResponder.answerQueryOnCreditsOfATransaction(query.toLowerCase());
                     } catch (InvalidQueryException e) {
@@ -105,35 +164,14 @@ public class InterGalacticInterpreter {
         }
 
         //If the input was not parseable for some reason and there were no answers, then return default answer
-        if(queriesAndTheirAnswers.size() == 0) {
+        if (queriesAndTheirAnswers.size() == 0) {
             queriesAndTheirAnswers.put(PLACEHOLDER_FOR_UNPARSEABLE_QUESTIONS, DEFAULT_ANSWER);
         }
-
-        return queriesAndTheirAnswers;
+        this.queriesAndTheirAnswers = queriesAndTheirAnswers;
     }
 
-    /**
-     * Parses lines of notes and puts them in respective buckets
-     * @param linesOfText Input Lines of text
-     */
-    private void parseLinesOfTextFromNotes(String[] linesOfText) {
-
-        bucketOfNotesOnInterGalacticConversionUnits = stream(linesOfText)
-                                                .filter(lineOfText -> lineOfText.matches(INTER_GALACTIC_UNIT_NOTES_PATTERN))
-                                                .collect(Collectors.toList());
-
-        bucketOfNotesOnTransactions = stream(linesOfText)
-                                                .filter(lineOfText -> lineOfText.matches(TRANSACTION_NOTES_PATTERN))
-                                                .map(String::toLowerCase)
-                                                .collect(Collectors.toList());
-
-        bucketOfQueries = stream(linesOfText)
-                                                .filter(lineOfText -> lineOfText.matches(QUERY_PATTERN))
-                                                .collect(Collectors.toList());
-    }
-
-    List<String> getBucketOfNotesOnInterGalacticConversionUnits() {
-        return bucketOfNotesOnInterGalacticConversionUnits;
+    List<String> getBucketOfNotesOnInterGalacticNumerals() {
+        return bucketOfNotesOnInterGalacticNumerals;
     }
 
     List<String> getBucketOfNotesOnTransactions() {
@@ -144,15 +182,15 @@ public class InterGalacticInterpreter {
         return bucketOfQueries;
     }
 
-    HashMap<String, String> getInterGalacticConversionUnits() {
-        return interGalacticConversionUnits;
+    HashMap<String, String> getInterGalacticToRomanConversionMap() {
+        return interGalacticToRomanConversionMap;
     }
 
     HashMap<String, Double> getCreditsPerEarthMaterial() {
         return creditsPerEarthMaterial;
     }
 
-    HashMap<String, String> getQueriesAndTheirAnswers() {
+    LinkedHashMap<String, String> getQueriesAndTheirAnswers() {
         return queriesAndTheirAnswers;
     }
 }
