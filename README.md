@@ -4,7 +4,7 @@
 - Java 8
 - Gradle 2.8 or above
 
-# Design
+## Design
 
 InterGalacticApp reads notes given a file and answers queries that it detects from the notes.
 
@@ -26,7 +26,7 @@ If the app cannot comprehend the inputs or extract conversion factors, it respon
 
 If the app cannot understand one or more questions from a list of valid questions, it responds with default answer for each of the invalid query and valid answer for the rest.
 
- # Assumptions
+ ## Assumptions
 
 - InterGalactic App is case insensitive glob=GLOB
 - Only roman letters will be recognised as valid earthly currency
@@ -34,7 +34,7 @@ If the app cannot understand one or more questions from a list of valid question
 - Only accepts text files with extension .txt
 
 
-# How To Run
+## How To Run
 
 From command line :
 
